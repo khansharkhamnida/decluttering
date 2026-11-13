@@ -1,0 +1,19 @@
+decluttering.xcodeproj/project.pbxproj
+  s_e040267076e5e2::t_63d0a9fbc5bdbd 347,378,407,427,450,484
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a8fcfaaadf2b9e6b8d7396b9edf021991ed65c95",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "openrouter/10Nov26/anthropic/claude-sonnet-5.5"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
