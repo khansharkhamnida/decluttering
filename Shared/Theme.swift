@@ -235,7 +235,7 @@ enum ThemeStore {
     static let didChange = Notification.Name("ThemeStoreDidChange")
 
     private static let key = "selectedThemeID"
-    private static let appGroupID = "group.com.shofia.decluttering"
+    private static let appGroupID = "group.com.khansharkhamnida.decluttering"
     private static var chosen: Theme?
 
     private static var defaults: UserDefaults { UserDefaults(suiteName: appGroupID) ?? .standard }

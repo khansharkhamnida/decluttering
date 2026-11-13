@@ -49,7 +49,7 @@ final class DecisionStore: DecisionRecording {
 
     static let shared = DecisionStore()
 
-    static let appGroupID = "group.com.shofia.decluttering"
+    static let appGroupID = "group.com.khansharkhamnida.decluttering"
     private static let migrationKey = "decisionsMigratedToAppGroup"
 
     private let container: ModelContainer

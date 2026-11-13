@@ -23,7 +23,7 @@ git clone https://github.com/khansharkhamnida/decluttering.git
 open decluttering/decluttering.xcodeproj
 ```
 
-Pick the `decluttering` scheme, set your own team under Signing & Capabilities, and change the App Group (`group.com.shofia.decluttering`) to one you own.
+Pick the `decluttering` scheme, set your own team under Signing & Capabilities, and change the App Group (`group.com.khansharkhamnida.decluttering`) to one you own.
 
 ## Layout
 
