@@ -1,0 +1,20 @@
+docs/index.html
+  s_e040267076e5e2::t_ba20342e1ba1ed 246-253,373-440
+  s_e040267076e5e2::t_a6b58e1ffefa2e 441
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f800b60e5dbd1e7603108f15900c1462e356d971",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
