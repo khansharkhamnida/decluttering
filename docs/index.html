@@ -148,6 +148,56 @@ svg.binny{flex:none}
 [data-t=camera] .body div:before{content:"f/1.8 \00b7 1/250 \00b7 ISO100";position:absolute;left:0;right:0;bottom:0;padding:2px 3px;background:#000000bb;font-family:"Courier New",monospace;font-size:5.8px;color:#E8E8EA;white-space:nowrap}
 [data-t=camera] .body div.vid:after{bottom:14px}
 
+
+.story{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:46px 0}
+.story:nth-of-type(even) .copy{order:2}
+.copy .num{display:inline-block;font-weight:900;font-size:15px;letter-spacing:2px;color:#fff;background:var(--brand);padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.copy h3{font-size:clamp(26px,4vw,38px);margin:0 0 10px;letter-spacing:-.6px;line-height:1.1}
+.copy p{font-size:18px;color:var(--mute);margin:0 0 14px}
+.copy ul{margin:0;padding:0;list-style:none;color:#ffffffd9;font-size:15px}
+.copy li{padding:3px 0 3px 26px;position:relative}
+.copy li:before{content:"✓";position:absolute;left:0;color:#8fe3a8;font-weight:900}
+.slot{display:flex;justify-content:center;min-height:640px;align-items:center}
+.js .story{opacity:0;transform:translateY(46px);transition:opacity .7s ease,transform .7s ease}
+.js .story.in{opacity:1;transform:none}
+.mock{--bg:repeating-linear-gradient(90deg,#B02339 0 14px,#8F192B 14px 28px);--paper:#FFF1E4;--strip:#FDE6E0;--tab:#F0C4BB;--ink:#6B0F1F;--onbg:#FFF1E4;--shade:#8F192Bcc;--bulb:#F3DDA6;box-shadow:0 24px 50px #0008}
+.slot .phone{flex:none;text-align:left}
+html,body{overflow-x:clip}
+.mock.light{--bg:#FDE6E0;--onbg:#6B0F1F;--shade:#F0C4BB}
+.sun{position:absolute;top:14%;left:62%;width:15%;aspect-ratio:1;border-radius:50%;background:#FFF5D6}
+.swcard{background:var(--paper);color:var(--ink);border-radius:18px;padding:10px 10px 8px;margin:8px 4px 0;position:relative;box-shadow:0 8px 18px #0005;transform:rotate(-2deg)}
+.swimg{height:300px;border-radius:12px;position:relative;overflow:hidden}
+.swcard b{display:block;font-size:17px;margin:8px 2px 0}.swcard small{display:block;margin:0 2px 2px;opacity:.7;font-weight:700}
+.stamp{position:absolute;top:26px;left:20px;border:4px solid;border-radius:10px;padding:2px 12px;font-weight:900;font-size:24px;transform:rotate(-12deg);background:#fff9}
+.stamp.keep{color:#2E9E5B;border-color:#2E9E5B}
+.swbtns{position:absolute;left:0;right:0;bottom:26px;display:flex;justify-content:center;gap:16px;align-items:center}
+.swbtns .rb{width:44px;height:44px;border-radius:50%;font-size:17px;background:var(--shade);color:var(--onbg)}
+.swbtns .rb.f{background:var(--paper);color:var(--ink)}.swbtns .rb.big{width:64px;height:64px;font-size:24px;background:var(--ink);color:var(--paper);border:3px solid var(--paper)}.swbtns .rb.f.big{background:var(--paper);color:var(--ink);border:0}
+.twins{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.tw{position:relative;border-radius:10px;aspect-ratio:1;overflow:hidden}.tw:first-child{grid-column:span 2;aspect-ratio:2/1}
+.tw.dim{filter:saturate(.7)}.tw em{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:11px;font-weight:900;background:var(--paper);color:var(--ink);border-radius:999px;padding:2px 9px}
+.stat{background:var(--paper);color:var(--ink);border-radius:14px;padding:11px 13px;margin:2px 2px 12px;font-size:13px;font-weight:700}
+.stk{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 4px;text-align:center;color:var(--ink);font-size:10.5px;font-weight:800}
+.stk div{display:flex;flex-direction:column;align-items:center;gap:5px}
+.stk u{text-decoration:none;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:25px;color:#fff;border:3px solid #fff;box-shadow:0 3px 6px #0003}
+.stk u.lock{background:#6B0F1F14;border:2px solid #6B0F1F4d;box-shadow:none;color:#6B0F1F66;font-size:20px}
+.phone.wall{background:radial-gradient(circle at 30% 20%,#ffd1a0,#0000 45%),linear-gradient(160deg,#7f5ad0,#2b3a8f 60%,#142046);padding:56px 18px 0;display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 50px #0008}
+.clock{font-size:60px;font-weight:300;text-align:center;color:#fff;line-height:1}.clock small{display:block;font-size:14px;font-weight:600;opacity:.85;margin:6px 0 30px}
+.widget.bigw{width:164px;height:164px;border-radius:30px;border-width:6px}.widget.bigw .ph{inset:0 0 34px 0}.widget.bigw .cap{height:34px;font-size:12px;padding:0 6px 0 7px}
+.widget.bigw .cap i{width:24px;height:24px;font-size:11px}
+.dock{position:absolute;left:14px;right:14px;bottom:14px;background:#ffffff33;border-radius:30px;padding:12px;display:flex;justify-content:space-around;backdrop-filter:blur(8px)}
+.dock img,.dock span{width:54px;height:54px;border-radius:14px;background:#ffffff55;display:block}
+.dimmer{position:absolute;inset:0;background:#0009;z-index:1}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#FDE6E0;color:#6B0F1F;border-radius:26px 26px 0 0;padding:14px 22px 30px;z-index:2;text-align:center}
+.grab{width:40px;height:5px;border-radius:3px;background:#6B0F1F44;margin:0 auto 16px}
+.sheet h4{font-size:22px;margin:0 0 8px;font-weight:900}.sheet p{font-size:14px;margin:0 0 18px;opacity:.85}
+.sheet .b1,.sheet .b2{border-radius:999px;padding:13px;font-weight:900;font-size:15px}.sheet .b1{background:#6B0F1F;color:#FFF1E4;margin-bottom:8px}.sheet .b2{color:#6B0F1F}
+.fan{position:relative;width:400px;height:560px}
+.fan .phone{position:absolute;top:0;transform-origin:50% 100%;box-shadow:0 20px 40px #0009;transition:transform .35s}
+.fan .phone:nth-child(1){left:-40px;transform:scale(.62) rotate(-8deg) translateY(30px)}
+.fan .phone:nth-child(2){right:-40px;transform:scale(.62) rotate(8deg) translateY(30px)}
+.fan .phone:nth-child(3){left:50px;transform:scale(.74);z-index:2}
+@media(max-width:860px){.story{grid-template-columns:1fr;gap:26px;text-align:center}.story .copy{order:0!important}.copy ul{display:inline-block;text-align:left}.slot{min-height:0}.fan{transform:scale(.8);margin:-50px 0}}
 :root{--page:#1b1b20;--ink:#fff;--mute:#ffffffa6;--card:#26262d;--brand:#B02339}
 html{scroll-behavior:smooth}
 body{background:var(--page);color:var(--ink);font-family:-apple-system,"SF Pro Rounded",system-ui,sans-serif;line-height:1.5}
@@ -206,19 +256,91 @@ footer a{margin:0 10px}
  <div class="badges"><span>iOS 26</span><span>UIKit + SwiftUI widget</span><span>No accounts</span><span>Photos never leave your phone</span></div>
 </div></header>
 
-<section><div class="wrap">
+<section id="features"><div class="wrap">
  <h2>A calmer way to clean your camera roll</h2>
- <p class="lead">Thousands of photos at once is overwhelming. One day at a time, split by year, is not.</p>
- <div class="features">
-  <div class="feat"><i>📅</i><h3>On This Day folders</h3><p>Every year's photos from today sit in their own folder. Fold them away, or filter by photos, Live Photos, videos and screenshots.</p></div>
-  <div class="feat"><i>👆</i><h3>Swipe sort</h3><p>Go through photos one at a time: keep or bin. Made a mistake? Undo it. A last look before anything is deleted.</p></div>
-  <div class="feat"><i>🫳</i><h3>Drag to select</h3><p>Slide a finger across the grid to pick a whole row to bin in one go.</p></div>
-  <div class="feat"><i>👯</i><h3>Look-alike finder</h3><p>Binny spots near-duplicate shots so you can keep the best one.</p></div>
-  <div class="feat"><i>🔥</i><h3>Streaks and stickers</h3><p>Bin a little each day and collect stickers for streaks and milestones.</p></div>
-  <div class="feat"><i>🧩</i><h3>Home screen widget</h3><p>A memory from this day on your home screen, with a heart button to keep it without opening the app.</p></div>
-  <div class="feat"><i>🌿</i><h3>Gentle breaks</h3><p>After a long run, Binny suggests a stretch and a sip of water. Optional daily reminder too.</p></div>
-  <div class="feat"><i>🎨</i><h3>14 themes</h3><p>Change the look of the whole app, the widget and the app icon from one button.</p></div>
- </div>
+ <p class="lead">Thousands of photos at once is overwhelming. One day at a time, split by year, is not. Here is the whole app, one piece at a time.</p>
+
+ <article class="story">
+  <div class="copy"><span class="num">01</span><h3>On This Day folders</h3>
+   <p>Open the app and every photo you took on today's date lands in a folder per year. Fold the years you are done with, or filter by photos, Live Photos, videos and screenshots.</p>
+   <ul><li>One folder per year, newest first</li><li>Filter chips with live counts</li><li>Step back or forward to any other day</li></ul></div>
+  <div class="slot" data-mock="home"></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">02</span><h3>Swipe sort</h3>
+   <p>Go through photos one at a time. Swipe right to keep, left to bin. Made a mistake? Undo it. Nothing is deleted until you have taken a last look.</p>
+   <ul><li>Big, focused card for each photo</li><li>Undo the last decision</li><li>Binned photos go to Recently Deleted</li></ul></div>
+  <div class="slot"><div class="phone mock">
+   <div class="top"><div class="circ" style="font-size:13px;align-items:center;padding:0">✕</div><div class="pill">3 / 12</div></div>
+   <div class="swcard"><div class="swimg" style="background:linear-gradient(160deg,#89f7fe,#66a6ff)"><i class="sun"></i></div><b>Beach day</b><small>13 Nov 2024</small><span class="stamp keep">KEEP</span></div>
+   <div class="swbtns"><span class="rb f">↶</span><span class="rb big">🗑</span><span class="rb f big">♥</span></div>
+  </div></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">03</span><h3>Drag to select</h3>
+   <p>Press Select, then slide a finger across the grid to pick a whole row in one sweep. One tap on Bin it clears them all.</p>
+   <ul><li>Select many photos in a single drag</li><li>Confirmation before anything goes</li></ul></div>
+  <div class="slot" data-mock="select"></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">04</span><h3>Look-alike finder</h3>
+   <p>Ten nearly identical shots of the same sunset? Binny spots the near-duplicates and lets you review the extras together.</p>
+   <ul><li>Groups similar photos from the same day</li><li>Keep the best, bin the rest</li></ul></div>
+  <div class="slot"><div class="phone mock">
+   <div class="top"><div class="circ" style="align-items:center;padding:0;font-size:14px">‹</div><div class="pill">Review</div></div>
+   <h2>Look-alikes</h2><div class="date">3 shots of the same moment</div>
+   <div class="twins"><div class="tw" style="background:linear-gradient(160deg,#f6d365,#fda085)"><i class="sun"></i><em>♥ Keep</em></div><div class="tw dim" style="background:linear-gradient(160deg,#f6d365,#fda085)"><i class="sun" style="left:36%"></i><em>🗑</em></div><div class="tw dim" style="background:linear-gradient(160deg,#f9d976,#f39f86)"><i class="sun" style="left:30%"></i><em>🗑</em></div></div>
+   <div class="bubble" style="height:auto;margin-top:12px;padding:10px 12px">Binny spotted 11 look-alike photos. Review the extras?</div>
+   <div class="cta">Bin 2 extras</div>
+  </div></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">05</span><h3>Streaks and stickers</h3>
+   <p>Bin a little each day and the streak grows. Hit milestones to collect stickers for your Booth Report. Locked ones stay a mystery until you earn them.</p>
+   <ul><li>Daily streak counter</li><li>Nine stickers to collect</li></ul></div>
+  <div class="slot"><div class="phone mock light">
+   <div class="top"><div class="circ" style="align-items:center;padding:0;font-size:14px">‹</div></div>
+   <h2 style="color:var(--ink)">Booth Report</h2>
+   <div class="stat"><b>38</b> binned · <b>6</b> kept · 🔥 <b>7</b> day streak</div>
+   <div class="stk">
+    <div><u style="background:#E8A33D">✨</u>First bin</div><div><u style="background:#E5667F">♥</u>First keep</div><div><u style="background:#E8703D">🔥</u>3-day streak</div>
+    <div><u style="background:#4FA86B">🍃</u>10 binned</div><div><u style="background:#C85A9B">♥</u>10 kept</div><div><u style="background:#6F6BD6">🌙</u>7-day streak</div>
+    <div><u class="lock">🔒</u>???</div><div><u class="lock">🔒</u>???</div><div><u class="lock">🔒</u>???</div>
+   </div>
+  </div></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">06</span><h3>Home screen widget</h3>
+   <p>A memory from this day, right on your home screen. Tap the heart to keep it without even opening the app. Small, medium and large sizes.</p>
+   <ul><li>Photos from past years, refreshed through the day</li><li>Heart button keeps a photo straight from the widget</li><li>Follows your chosen theme</li></ul></div>
+  <div class="slot"><div class="phone wall">
+   <div class="clock">9:41<small>Friday, 13 November</small></div>
+   <div class="widget bigw"><div class="ph" style="background:linear-gradient(135deg,#f6d365,#fda085)"></div><div class="cap"><span>2 years ago<br><small style="font-size:8px;opacity:.7">13 Nov 2024</small></span><i>♥</i></div></div>
+   <div class="dock"><img src="icons/red.png" alt=""><span></span><span></span><span></span></div>
+  </div></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">07</span><h3>Gentle breaks</h3>
+   <p>Sorting photos can be oddly tiring. After a long run, Binny suggests a stretch and a sip of water, and you can switch on a daily reminder to come back.</p>
+   <ul><li>Friendly nudges, never nagging</li><li>Optional daily reminder</li></ul></div>
+  <div class="slot"><div class="phone mock">
+   <div class="dimmer"></div>
+   <div class="sheet"><div class="grab"></div><h4>Time for a tiny break</h4><p>You've sorted 40 photos today. Decluttering is best in small doses, so stretch, sip some water and come back fresh.</p><div class="b1">Take a break</div><div class="b2">Keep going</div></div>
+  </div></div>
+ </article>
+
+ <article class="story">
+  <div class="copy"><span class="num">08</span><h3>14 themes</h3>
+   <p>Make it yours. One tap on the palette button changes the colours, typeface, textures and photo frames of the whole app, the widget and even the home screen icon.</p>
+   <ul><li>Red Curtain, Film Roll, Darkroom, Camera Roll and ten more</li><li>Switches instantly, remembered next time</li></ul></div>
+  <div class="slot"><div class="fan" id="fan"></div></div>
+ </article>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -314,6 +436,24 @@ document.getElementById("g").innerHTML=T.map((t,i)=>{
 // golden: the bubble/binny need a solid colour, not the translucent glass
 document.querySelectorAll('.phone[data-t=golden]').forEach(p=>p.style.setProperty('--solid','#FFF8EF'));
 
+
+document.documentElement.classList.add("js");
+(function(){
+ const grid=document.getElementById("g");
+ const find=id=>grid.querySelector('.phone[data-t='+id+']');
+ const place=(sel,el)=>{const slot=document.querySelector(sel);if(slot&&el)slot.appendChild(el)};
+ const home=find("red").cloneNode(true);
+ place('[data-mock=home]',home);
+ const sel=find("red").cloneNode(true);
+ sel.querySelectorAll(".body div").forEach((d,i)=>{if(i%2===0)d.classList.add("sel")});
+ const pill=sel.querySelector(".pill");if(pill)pill.textContent="Cancel";
+ const cta=sel.querySelector(".cta");if(cta)cta.textContent="🗑 Bin it · 3";
+ place('[data-mock=select]',sel);
+ const fan=document.getElementById("fan");
+ ["purple","golden","dark"].forEach(id=>fan.appendChild(find(id).cloneNode(true)));
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.2});
+ document.querySelectorAll(".story").forEach(x=>io.observe(x));
+})();
 </script>
 </body>
 </html>
