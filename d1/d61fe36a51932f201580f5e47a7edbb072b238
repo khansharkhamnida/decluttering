@@ -1,0 +1,23 @@
+Shared/DecisionStore.swift
+  s_e040267076e5e2::t_1741d23f1a6979 96-101,114,156
+DeclutteringWidget/DeclutteringWidget.swift
+  s_e040267076e5e2::t_06b1e1c7b38186 17-18,32,57-59,77,102,107,114-124,127-151,153-179,181,183-187,189-190,192-193,195-236,284-285
+DeclutteringWidget/BinnyMark.swift
+  s_e040267076e5e2::t_903c10b6c26c16 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d1d61fe36a51932f201580f5e47a7edbb072b238",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
