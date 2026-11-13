@@ -243,6 +243,14 @@ pre{background:#0e0e12;border-radius:16px;padding:18px 20px;overflow-x:auto;font
 .build p{text-align:center;color:var(--mute)}
 footer{padding:36px 0 60px;text-align:center;color:var(--mute);font-size:14px}
 footer a{margin:0 10px}
+.fw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:26px}
+.fw{background:var(--card);border-radius:22px;padding:24px}
+.fw-tag{display:inline-block;background:var(--brand);font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.fw h3{margin:10px 0 6px}.fw .plain{color:var(--mute);font-size:15px;margin-bottom:12px}
+.fw ul{margin:0;padding-left:18px;font-size:14px;color:#ffffffd0}.fw li{margin-bottom:8px}
+.fw code,.build code{background:#ffffff1c;border-radius:6px;padding:1px 6px;font-size:12.5px;white-space:normal}
+.tech-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 auto 26px}
+.tech-chips span{background:#ffffff1c;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:800}
 </style>
 </head>
 <body>
@@ -361,6 +369,75 @@ footer a{margin:0 10px}
 <p class="hint">Previews use colour blocks in place of your photos.</p>
 <div class="wrap"><div class="icons"><img src="icons/red.png" alt="" loading="lazy"><img src="icons/purple.png" alt="" loading="lazy"><img src="icons/midnight.png" alt="" loading="lazy"><img src="icons/kraft.png" alt="" loading="lazy"><img src="icons/blueprint.png" alt="" loading="lazy"><img src="icons/golden.png" alt="" loading="lazy"><img src="icons/gameboy.png" alt="" loading="lazy"><img src="icons/linen.png" alt="" loading="lazy"><img src="icons/seaside.png" alt="" loading="lazy"><img src="icons/clay.png" alt="" loading="lazy"><img src="icons/film.png" alt="" loading="lazy"><img src="icons/filmdark.png" alt="" loading="lazy"><img src="icons/dark.png" alt="" loading="lazy"><img src="icons/camera.png" alt="" loading="lazy"></div></div>
 </section>
+
+<section id="tech"><div class="wrap">
+ <h2>Under the hood</h2>
+ <p class="lead">The interesting bits, in plain words first and the proper jargon underneath.</p>
+ <div class="fw-grid">
+  <article class="fw"><span class="fw-tag">Architecture</span><h3>VIPER &amp; protocols</h3>
+   <p class="plain">Every screen is split into small jobs: one part draws, one decides, one fetches, one moves you to the next screen. They only talk through contracts, so any part can be swapped or faked in a test.</p>
+   <ul>
+    <li><b>VIPER:</b> View, Interactor, Presenter, Entity, Router for On This Day, Swipe Sort and the Photo Viewer.</li>
+    <li><b>Protocol contracts:</b> <code>OnThisDayPresenterProtocol</code>, <code>PhotoViewerInteractorProtocol</code>, <code>DecisionRecording</code></li>
+    <li><b>Dependency injection:</b> each Router builds its module and passes in the real parts. The tests pass in stand-ins.</li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Photos</span><h3>Photos framework</h3>
+   <p class="plain">Reads your camera roll straight from the device and finds what you took on this day in past years. Nothing is copied or uploaded.</p>
+   <ul>
+    <li><b>Fast thumbnails</b> that load ahead as you scroll. <code>PHCachingImageManager</code></li>
+    <li><b>Safe deleting.</b> Binned photos go to Recently Deleted, after a last look. <code>PHPhotoLibrary.performChanges</code></li>
+    <li><b>Live Photos and video</b> play in the viewer. <code>PhotosUI</code>, <code>AVFoundation</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Look-alikes</span><h3>Vision</h3>
+   <p class="plain">Finds the retakes and burst shots, so you can keep the best one. It turns each photo into a "fingerprint" of what it looks like and compares them, on the phone.</p>
+   <ul>
+    <li><b>Image feature prints</b> measure how alike two photos are. <code>VNGenerateImageFeaturePrintRequest</code>, <code>VNFeaturePrintObservation</code></li>
+    <li><b>Shot close together too.</b> Photos must be within 90 seconds, so unrelated photos are not matched.</li>
+    <li><b>One year per thread,</b> so the search stays quick. <code>DispatchQueue.concurrentPerform</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Memory</span><h3>SwiftData</h3>
+   <p class="plain">Remembers what you kept and binned, so the stats, the streak and the stickers always add up.</p>
+   <ul>
+    <li><b>One small record per decision.</b> <code>@Model Decision</code></li>
+    <li><b>Streaks and totals</b> are worked out from those records, with no server or account.</li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Widget</span><h3>WidgetKit &amp; App Intents</h3>
+   <p class="plain">A home screen photo with a Keep heart. Tap it and the decision is saved without opening the app.</p>
+   <ul>
+    <li><b>Widget timeline</b> picks a photo from today's date. <code>TimelineProvider</code></li>
+    <li><b>Interactive Keep button.</b> <code>Button(intent:)</code> + <code>KeepPhotoIntent</code></li>
+    <li><b>Shared with the app</b> through an App Group, then refreshed. <code>reloadAllTimelines()</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Feel</span><h3>Core Haptics &amp; UIKit</h3>
+   <p class="plain">Small taps and buzzes that make sorting feel physical.</p>
+   <ul>
+    <li><b>Custom haptic patterns</b> for keep, bin and sparkle. <code>CHHapticEngine</code>, <code>CHHapticPattern</code></li>
+    <li><b>Swipe cards and drag to select</b> follow your finger. <code>UIPanGestureRecognizer</code></li>
+    <li><b>Folder grids</b> that adapt to any screen. <code>UICollectionViewCompositionalLayout</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Themes</span><h3>Theme system</h3>
+   <p class="plain">One tap restyles the whole app, the widget and even the app icon.</p>
+   <ul>
+    <li><b>14 themes</b> defined once in shared code, used by the app and the widget.</li>
+    <li><b>Icon swap.</b> <code>UIApplication.setAlternateIconName</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Gentle nudges</span><h3>UserNotifications &amp; BreakPolicy</h3>
+   <p class="plain">Binny suggests a break before sorting turns into a chore, and can remind you tomorrow.</p>
+   <ul>
+    <li><b>Break policy</b> is a small rule: two levels a day, each shown once. <code>BreakPolicy</code></li>
+    <li><b>Local reminders</b> are scheduled on the device. <code>UNCalendarNotificationTrigger</code></li>
+   </ul></article>
+  <article class="fw"><span class="fw-tag">Safety net</span><h3>Automated tests</h3>
+   <p class="plain">Little robots that check the rules every time the code changes.</p>
+   <ul>
+    <li><b>Presenter tests</b> for On This Day, Swipe Sort and Photo Viewer, using mock interactors and routers.</li>
+    <li><b>Logic tests</b> for themes, break rules and drag select.</li>
+   </ul></article>
+ </div>
+ <div class="tech-chips"><span>Swift</span><span>UIKit</span><span>SwiftUI (widget)</span><span>Photos</span><span>Vision</span><span>SwiftData</span><span>WidgetKit</span><span>App Intents</span><span>Core Haptics</span><span>UserNotifications</span><span>VIPER</span><span>iOS 26</span></div>
+ <pre>git clone https://github.com/khansharkhamnida/decluttering.git
+open decluttering/decluttering.xcodeproj   # pick an iPhone simulator, press Run</pre>
+</div></section>
 
 <section><div class="wrap"><div class="privacy">
  <h2>Your photos stay yours</h2>
