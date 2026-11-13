@@ -1,0 +1,670 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FC3D606930A60F2E00E92033 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3D606830A60F2E00E92033 /* WidgetKit.framework */; };
+		FC3D606B30A60F2E00E92033 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3D606A30A60F2E00E92033 /* SwiftUI.framework */; };
+		FC3D607630A60F3000E92033 /* DeclutteringWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FC3D606630A60F2E00E92033 /* DeclutteringWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FC3D607430A60F3000E92033 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC654E6B307FC09400927BC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FC3D606530A60F2E00E92033;
+			remoteInfo = DeclutteringWidgetExtension;
+		};
+		FC3D60B730A6300000E92033 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC654E6B307FC09400927BC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FC654E72307FC09400927BC3;
+			remoteInfo = decluttering;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FC3D607730A60F3000E92033 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FC3D607630A60F3000E92033 /* DeclutteringWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FC3D606630A60F2E00E92033 /* DeclutteringWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeclutteringWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC3D606830A60F2E00E92033 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FC3D606A30A60F2E00E92033 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FC3D607D30A6101700E92033 /* DeclutteringWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeclutteringWidgetExtension.entitlements; sourceTree = "<group>"; };
+		FC3D60B130A6300000E92033 /* declutteringTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = declutteringTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC654E73307FC09400927BC3 /* decluttering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = decluttering.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FC3D607B30A60F3000E92033 /* Exceptions for "DeclutteringWidget" folder in "DeclutteringWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FC3D606530A60F2E00E92033 /* DeclutteringWidgetExtension */;
+		};
+		FC654E84307FC09600927BC3 /* Exceptions for "decluttering" folder in "decluttering" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FC654E72307FC09400927BC3 /* decluttering */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FC3D606C30A60F2E00E92033 /* DeclutteringWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FC3D607B30A60F3000E92033 /* Exceptions for "DeclutteringWidget" folder in "DeclutteringWidgetExtension" target */,
+			);
+			path = DeclutteringWidget;
+			sourceTree = "<group>";
+		};
+		FC3D60A130A6200000E92033 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		FC3D60B230A6300000E92033 /* declutteringTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = declutteringTests;
+			sourceTree = "<group>";
+		};
+		FC654E75307FC09400927BC3 /* decluttering */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FC654E84307FC09600927BC3 /* Exceptions for "decluttering" folder in "decluttering" target */,
+			);
+			path = decluttering;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FC3D606330A60F2E00E92033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC3D606B30A60F2E00E92033 /* SwiftUI.framework in Frameworks */,
+				FC3D606930A60F2E00E92033 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC3D60B530A6300000E92033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC654E70307FC09400927BC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FC3D606730A60F2E00E92033 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC3D606830A60F2E00E92033 /* WidgetKit.framework */,
+				FC3D606A30A60F2E00E92033 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FC654E6A307FC09400927BC3 = {
+			isa = PBXGroup;
+			children = (
+				FC3D607D30A6101700E92033 /* DeclutteringWidgetExtension.entitlements */,
+				FC654E75307FC09400927BC3 /* decluttering */,
+				FC3D606C30A60F2E00E92033 /* DeclutteringWidget */,
+				FC3D60B230A6300000E92033 /* declutteringTests */,
+				FC3D60A130A6200000E92033 /* Shared */,
+				FC3D606730A60F2E00E92033 /* Frameworks */,
+				FC654E74307FC09400927BC3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FC654E74307FC09400927BC3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC654E73307FC09400927BC3 /* decluttering.app */,
+				FC3D606630A60F2E00E92033 /* DeclutteringWidgetExtension.appex */,
+				FC3D60B130A6300000E92033 /* declutteringTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FC3D606530A60F2E00E92033 /* DeclutteringWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC3D607A30A60F3000E92033 /* Build configuration list for PBXNativeTarget "DeclutteringWidgetExtension" */;
+			buildPhases = (
+				FC3D606230A60F2E00E92033 /* Sources */,
+				FC3D606330A60F2E00E92033 /* Frameworks */,
+				FC3D606430A60F2E00E92033 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FC3D606C30A60F2E00E92033 /* DeclutteringWidget */,
+				FC3D60A130A6200000E92033 /* Shared */,
+			);
+			name = DeclutteringWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = DeclutteringWidgetExtension;
+			productReference = FC3D606630A60F2E00E92033 /* DeclutteringWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		FC3D60B330A6300000E92033 /* declutteringTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC3D60B930A6300000E92033 /* Build configuration list for PBXNativeTarget "declutteringTests" */;
+			buildPhases = (
+				FC3D60B430A6300000E92033 /* Sources */,
+				FC3D60B530A6300000E92033 /* Frameworks */,
+				FC3D60B630A6300000E92033 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FC3D60B830A6300000E92033 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FC3D60B230A6300000E92033 /* declutteringTests */,
+			);
+			name = declutteringTests;
+			packageProductDependencies = (
+			);
+			productName = declutteringTests;
+			productReference = FC3D60B130A6300000E92033 /* declutteringTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FC654E72307FC09400927BC3 /* decluttering */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC654E85307FC09600927BC3 /* Build configuration list for PBXNativeTarget "decluttering" */;
+			buildPhases = (
+				FC654E6F307FC09400927BC3 /* Sources */,
+				FC654E70307FC09400927BC3 /* Frameworks */,
+				FC654E71307FC09400927BC3 /* Resources */,
+				FC3D607730A60F3000E92033 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FC3D607530A60F3000E92033 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FC3D60A130A6200000E92033 /* Shared */,
+				FC654E75307FC09400927BC3 /* decluttering */,
+			);
+			name = decluttering;
+			packageProductDependencies = (
+			);
+			productName = decluttering;
+			productReference = FC654E73307FC09400927BC3 /* decluttering.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FC654E6B307FC09400927BC3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					FC3D606530A60F2E00E92033 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					FC3D60B330A6300000E92033 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = FC654E72307FC09400927BC3;
+					};
+					FC654E72307FC09400927BC3 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+				};
+			};
+			buildConfigurationList = FC654E6E307FC09400927BC3 /* Build configuration list for PBXProject "decluttering" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FC654E6A307FC09400927BC3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FC654E74307FC09400927BC3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FC654E72307FC09400927BC3 /* decluttering */,
+				FC3D606530A60F2E00E92033 /* DeclutteringWidgetExtension */,
+				FC3D60B330A6300000E92033 /* declutteringTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FC3D606430A60F2E00E92033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC3D60B630A6300000E92033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC654E71307FC09400927BC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FC3D606230A60F2E00E92033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC3D60B430A6300000E92033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC654E6F307FC09400927BC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FC3D607530A60F3000E92033 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FC3D606530A60F2E00E92033 /* DeclutteringWidgetExtension */;
+			targetProxy = FC3D607430A60F3000E92033 /* PBXContainerItemProxy */;
+		};
+		FC3D60B830A6300000E92033 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FC654E72307FC09400927BC3 /* decluttering */;
+			targetProxy = FC3D60B730A6300000E92033 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FC3D607830A60F3000E92033 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DeclutteringWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DeclutteringWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeclutteringWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.decluttering.DeclutteringWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FC3D607930A60F3000E92033 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DeclutteringWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DeclutteringWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeclutteringWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.decluttering.DeclutteringWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FC3D60BA30A6300000E92033 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.declutteringTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/decluttering.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/decluttering";
+			};
+			name = Debug;
+		};
+		FC3D60BB30A6300000E92033 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.declutteringTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/decluttering.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/decluttering";
+			};
+			name = Release;
+		};
+		FC654E86307FC09600927BC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-purple AppIcon-midnight AppIcon-kraft AppIcon-blueprint AppIcon-golden AppIcon-gameboy AppIcon-linen AppIcon-seaside AppIcon-clay AppIcon-film AppIcon-filmdark AppIcon-dark AppIcon-camera";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = decluttering/decluttering.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = decluttering/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Decluttering shows photos taken on this day in past years so you can review and delete the ones you don't need.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.decluttering;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FC654E87307FC09600927BC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-purple AppIcon-midnight AppIcon-kraft AppIcon-blueprint AppIcon-golden AppIcon-gameboy AppIcon-linen AppIcon-seaside AppIcon-clay AppIcon-film AppIcon-filmdark AppIcon-dark AppIcon-camera";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = decluttering/decluttering.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = decluttering/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Decluttering shows photos taken on this day in past years so you can review and delete the ones you don't need.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shofia.decluttering;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FC654E88307FC09600927BC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FC654E89307FC09600927BC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FC3D607A30A60F3000E92033 /* Build configuration list for PBXNativeTarget "DeclutteringWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC3D607830A60F3000E92033 /* Debug */,
+				FC3D607930A60F3000E92033 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC3D60B930A6300000E92033 /* Build configuration list for PBXNativeTarget "declutteringTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC3D60BA30A6300000E92033 /* Debug */,
+				FC3D60BB30A6300000E92033 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC654E6E307FC09400927BC3 /* Build configuration list for PBXProject "decluttering" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC654E88307FC09600927BC3 /* Debug */,
+				FC654E89307FC09600927BC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC654E85307FC09600927BC3 /* Build configuration list for PBXNativeTarget "decluttering" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC654E86307FC09600927BC3 /* Debug */,
+				FC654E87307FC09600927BC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FC654E6B307FC09400927BC3 /* Project object */;
+}
