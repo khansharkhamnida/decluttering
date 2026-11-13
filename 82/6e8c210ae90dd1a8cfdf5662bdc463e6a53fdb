@@ -1,0 +1,31 @@
+docs/index.html
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 451
+README.md
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 26
+decluttering/decluttering.entitlements
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 7
+Shared/DecisionStore.swift
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 52
+Shared/Theme.swift
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 238
+DeclutteringWidgetExtension.entitlements
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 7
+decluttering.xcodeproj/project.pbxproj
+  s_e040267076e5e2::t_7a8e4f8aa2d14a 358,389,410,430,463,497
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "826e8c210ae90dd1a8cfdf5662bdc463e6a53fdb",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
