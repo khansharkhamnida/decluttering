@@ -458,42 +458,8 @@ open decluttering.xcodeproj</pre>
 <script>
 
 
-// Silly hamsters stand in for photos
-function hamster(o){
- const bg=o.bg,fur=o.fur||"#E9B26B",belly=o.belly||"#FFF1D6",pink="#F4A5A8",dark="#2a1a14";
- let a="";
- const eyes=o.derp
-  ?`<circle cx="80" cy="98" r="12" fill="#fff" stroke="${dark}" stroke-width="2"/><circle cx="120" cy="98" r="12" fill="#fff" stroke="${dark}" stroke-width="2"/><circle cx="86" cy="103" r="5.5" fill="${dark}"/><circle cx="116" cy="94" r="5.5" fill="${dark}"/>`
-  :`<circle cx="78" cy="99" r="8" fill="${dark}"/><circle cx="122" cy="99" r="8" fill="${dark}"/><circle cx="75" cy="96" r="2.8" fill="#fff"/><circle cx="119" cy="96" r="2.8" fill="#fff"/>`;
- const mouth=o.tongue
-  ?`<path d="M88 118 Q100 134 112 118 Z" fill="#7a2230"/><ellipse cx="100" cy="127" rx="6.5" ry="8" fill="#ff7b9c"/>`
-  :`<path d="M100 114 V120 M100 120 Q92 129 84 122 M100 120 Q108 129 116 122" fill="none" stroke="${dark}" stroke-width="2.6" stroke-linecap="round"/>`;
- if(o.acc==="seed") a=`<g transform="rotate(-18 100 146)"><ellipse cx="100" cy="146" rx="11" ry="19" fill="#4a4a4a"/><path d="M95 134 Q100 146 95 158 M105 134 Q100 146 105 158" stroke="#fff" stroke-width="2.4" fill="none"/></g><circle cx="86" cy="148" r="8" fill="${fur}"/><circle cx="114" cy="148" r="8" fill="${fur}"/>`;
- if(o.acc==="shades") a=`<rect x="58" y="88" width="38" height="22" rx="9" fill="#111"/><rect x="104" y="88" width="38" height="22" rx="9" fill="#111"/><path d="M96 97 H104" stroke="#111" stroke-width="4"/><path d="M64 93 L74 93 M110 93 L120 93" stroke="#fff" stroke-width="2.4" opacity=".6" stroke-linecap="round"/>`;
- if(o.acc==="hat") a=`<polygon points="100,12 80,60 120,60" fill="#ff5fa2"/><path d="M90 38 L110 38 M85 50 L115 50" stroke="#ffe14f" stroke-width="5"/><circle cx="100" cy="12" r="7" fill="#ffe14f"/>`;
- if(o.acc==="crown") a=`<polygon points="70,60 74,30 88,46 100,24 112,46 126,30 130,60" fill="#ffd23f" stroke="#e0a800" stroke-width="3" stroke-linejoin="round"/><circle cx="100" cy="30" r="3.5" fill="#e0457b"/><circle cx="76" cy="38" r="3" fill="#4aa8ff"/><circle cx="124" cy="38" r="3" fill="#4aa8ff"/>`;
- if(o.acc==="bowtie") a=`<polygon points="100,152 76,140 76,164" fill="#e0373f"/><polygon points="100,152 124,140 124,164" fill="#e0373f"/><circle cx="100" cy="152" r="7" fill="#b3202a"/>`;
- if(o.acc==="flower") a=`<g transform="translate(148 52)">${[0,72,144,216,288].map(r=>`<ellipse cx="0" cy="-9" rx="6.5" ry="9" fill="#ff8fb8" transform="rotate(${r})"/>`).join("")}<circle r="5.5" fill="#ffd23f"/></g>`;
- const stuffed=o.stuffed?`<ellipse cx="46" cy="118" rx="34" ry="28" fill="${belly}"/><ellipse cx="154" cy="118" rx="34" ry="28" fill="${belly}"/>`:"";
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${bg[0]}"/><stop offset="1" stop-color="${bg[1]}"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><ellipse cx="100" cy="176" rx="62" ry="8" fill="#000" opacity=".16"/>
-<circle cx="50" cy="62" r="21" fill="${fur}"/><circle cx="50" cy="62" r="11.5" fill="${pink}"/><circle cx="150" cy="62" r="21" fill="${fur}"/><circle cx="150" cy="62" r="11.5" fill="${pink}"/>
-<ellipse cx="100" cy="118" rx="74" ry="60" fill="${fur}"/>${stuffed}<ellipse cx="100" cy="140" rx="46" ry="34" fill="${belly}"/><ellipse cx="62" cy="116" rx="24" ry="20" fill="${belly}" opacity=".85"/><ellipse cx="138" cy="116" rx="24" ry="20" fill="${belly}" opacity=".85"/>
-<ellipse cx="72" cy="170" rx="19" ry="9" fill="${pink}"/><ellipse cx="128" cy="170" rx="19" ry="9" fill="${pink}"/>
-<circle cx="60" cy="112" r="7" fill="${pink}" opacity=".65"/><circle cx="140" cy="112" r="7" fill="${pink}" opacity=".65"/>
-${eyes}<ellipse cx="100" cy="111" rx="6.5" ry="5" fill="#e58a8a"/>${mouth}
-<path d="M64 110 L34 104 M64 116 L32 120 M136 110 L166 104 M136 116 L168 120" stroke="${dark}" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>${a}</svg>`;
- return `url('data:image/svg+xml,${encodeURIComponent(svg).replace(/'/g,"%27")}') center/cover`;
-}
-const HAM=[
- hamster({bg:["#ffb88c","#de6262"],acc:"seed",stuffed:1}),
- hamster({bg:["#89f7fe","#66a6ff"],acc:"shades"}),
- hamster({bg:["#a8e063","#56ab2f"],acc:"hat",fur:"#d9a066"}),
- hamster({bg:["#fbc2eb","#a6c1ee"],derp:1,tongue:1,fur:"#f0c9a0"}),
- hamster({bg:["#f6d365","#fda085"],acc:"crown",stuffed:1}),
- hamster({bg:["#667eea","#764ba2"],acc:"bowtie",fur:"#cfcfd6",belly:"#ffffff"}),
- hamster({bg:["#84fab0","#8fd3f4"],acc:"flower",fur:"#f3c58b"}),
- hamster({bg:["#ff9a9e","#fad0c4"],derp:1,acc:"seed",fur:"#c98d55"})
-];
+// Hamster photos stand in for the camera roll
+const HAM=Array.from({length:11},(_,i)=>`url('photos/hamster-${i+1}.jpg') center/cover`);
 const P=HAM;
 const stripes=(a,b)=>`repeating-linear-gradient(90deg,${a} 0 14px,${b} 14px 28px)`;
 const sparkle=(a,b)=>`radial-gradient(${b} 2px,transparent 3px) 0 0/26px 26px,radial-gradient(${b}88 1.5px,transparent 2.5px) 13px 13px/26px 26px,${a}`;
@@ -530,7 +496,7 @@ const T=[
 ];
 const binny=(s)=>`<svg class="binny" width="${s*.89}" height="${s}" viewBox="0 0 64 72"><g transform="rotate(-13 21 11)"><rect x="10" y="1" width="22" height="20" rx="3" fill="#F4A58A"/></g><g transform="rotate(11 41 13)"><rect x="30" y="3" width="22" height="20" rx="3" fill="#B9A5F0"/></g><path d="M10 24H54L50 62Q49.5 67 46 67H18Q14.5 67 14 62Z" fill="var(--solid)"/><g stroke="var(--tab)" stroke-width="2" stroke-linecap="round"><path d="M22 31L21.3 60"/><path d="M32 31V60"/><path d="M42 31L42.7 60"/></g><rect x="24" y="9" width="16" height="8" rx="4" fill="var(--solid)"/><rect x="6" y="16" width="52" height="9" rx="4.5" fill="var(--solid)"/><ellipse cx="25" cy="43" rx="2.5" ry="3" fill="var(--ink)"/><ellipse cx="39" cy="43" rx="2.5" ry="3" fill="var(--ink)"/><path d="M27.4 49.5A5 5 0 0 0 36.6 49.5" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/><ellipse cx="19" cy="49" rx="3" ry="2" fill="#F4A5A8" opacity=".8"/><ellipse cx="45" cy="49" rx="3" ry="2" fill="#F4A5A8" opacity=".8"/></svg>`;
 const divider=t=>({bulbs:`<div class="bulbs">${"<i></i>".repeat(17)}</div>`,stitch:`<div class="stitch"></div>`,sprock:`<div class="sprock">${"<i></i>".repeat(17)}</div>`,ticks:`<div class="ticks"></div>`,pix:`<div class="pix">${"<i></i>".repeat(16)}</div>`,waves:`<div class="waves"></div>`,none:`<div class="none"></div>`}[t]);
-const tiles=(o,sel,vid)=>[0,1,2].map(i=>`<div class="${sel&&sel.includes(i)?'sel ':''}${vid===i?'vid':''}" style="background:${P[(i*2+o)%8]}"></div>`).join("");
+const tiles=(o,sel,vid)=>[0,1,2].map(i=>`<div class="${sel&&sel.includes(i)?'sel ':''}${vid===i?'vid':''}" style="background:${P[(i*2+o)%P.length]}"></div>`).join("");
 document.getElementById("g").innerHTML=T.map((t,i)=>{
  const v=t.v, vars=Object.entries(v).map(([k,x])=>`--${k}:${x}`).join(";");
  return `<div class="card"><div class="head"><b>${String(i+1).padStart(2,"0")} · ${t.name}</b>${t.kept?'<span class="kept">kept</span>':''}<small>${t.tag}</small>
@@ -568,7 +534,7 @@ document.documentElement.classList.add("js");
  document.querySelectorAll(".sun").forEach(e=>e.remove());
  const bgOf=(sel,idx)=>document.querySelectorAll(sel).forEach((e,n)=>{e.style.background=HAM[(typeof idx==="number"?idx:idx[n%idx.length])]});
  bgOf(".swimg",1);
- bgOf(".tw",[4,4,4]);
+ bgOf(".tw",[7,8,9]);
  bgOf(".widget.bigw .ph",0);
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.2});
  document.querySelectorAll(".story").forEach(x=>io.observe(x));
