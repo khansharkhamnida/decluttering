@@ -1,0 +1,201 @@
+.gitignore
+  s_134d8b1269530e::t_e710db1e035cd2 1-7
+DeclutteringWidget/DeclutteringWidget.swift
+  s_134d8b1269530e::t_2f3fb283f62588 1-200
+DeclutteringWidget/Info.plist
+  s_61451e80e9ae51::t_e2f5a7400015ce 1-13
+README.md
+  s_134d8b1269530e::t_a4b687da9d4639 1-33
+Shared/BoothTheme.swift
+  s_134d8b1269530e::t_e4cc5ed7a2413c 1-154
+Shared/BoothVoice.swift
+  s_134d8b1269530e::t_1285dc79205bbd 1-115
+Shared/BreakPolicy.swift
+  s_61451e80e9ae51::t_ae8dbf13decc33 1-45
+Shared/DateFactory.swift
+  s_61451e80e9ae51::t_739d80be0bcb74 1-37
+Shared/DecisionStore.swift
+  s_61451e80e9ae51::t_4e98a720cecba9 1-165
+Shared/KeepPhotoIntent.swift
+  s_61451e80e9ae51::t_03b31a94164cb7 1-22
+Shared/PhotoLibraryService.swift
+  s_61451e80e9ae51::t_f3f00773ec75a2 1-73
+Shared/Theme.swift
+  s_134d8b1269530e::t_47d0583421de64 1-255
+decluttering.xcodeproj/project.pbxproj
+  s_134d8b1269530e::t_8160d0e99c828a 1-670
+decluttering/Assets.xcassets/AppIcon-blueprint.appiconset/Contents.json
+  s_134d8b1269530e::t_df46cca88598a1 1-14
+decluttering/Assets.xcassets/AppIcon-camera.appiconset/Contents.json
+  s_134d8b1269530e::t_302249ef9d6190 1-14
+decluttering/Assets.xcassets/AppIcon-clay.appiconset/Contents.json
+  s_134d8b1269530e::t_6b0314b3f2a39c 1-14
+decluttering/Assets.xcassets/AppIcon-dark.appiconset/Contents.json
+  s_134d8b1269530e::t_c4be65c7849483 1-14
+decluttering/Assets.xcassets/AppIcon-film.appiconset/Contents.json
+  s_134d8b1269530e::t_30b2555faf9d7a 1-14
+decluttering/Assets.xcassets/AppIcon-filmdark.appiconset/Contents.json
+  s_134d8b1269530e::t_f3d6d2fdb32d05 1-14
+decluttering/Assets.xcassets/AppIcon-gameboy.appiconset/Contents.json
+  s_134d8b1269530e::t_5188a184804f9d 1-14
+decluttering/Assets.xcassets/AppIcon-golden.appiconset/Contents.json
+  s_134d8b1269530e::t_d78da85d7926ab 1-14
+decluttering/Assets.xcassets/AppIcon-kraft.appiconset/Contents.json
+  s_134d8b1269530e::t_82079929c8c311 1-14
+decluttering/Assets.xcassets/AppIcon-linen.appiconset/Contents.json
+  s_134d8b1269530e::t_3880381373b48a 1-14
+decluttering/Assets.xcassets/AppIcon-midnight.appiconset/Contents.json
+  s_134d8b1269530e::t_c5ac92c84a0085 1-14
+decluttering/Assets.xcassets/AppIcon-purple.appiconset/Contents.json
+  s_134d8b1269530e::t_bd9d08ef671da9 1-14
+decluttering/Assets.xcassets/AppIcon-seaside.appiconset/Contents.json
+  s_134d8b1269530e::t_a8171240b7fbdb 1-14
+decluttering/Assets.xcassets/AppIcon.appiconset/Contents.json
+  s_61451e80e9ae51::t_106dc8e448ad5d 1-14
+decluttering/Components/BinnyCardView.swift
+  s_134d8b1269530e::t_f5a8867e36d52c 1-280
+decluttering/Components/BreakReminderViewController.swift
+  s_134d8b1269530e::t_f1b00beaab3c55 1-101
+decluttering/Components/CelebrationOverlay.swift
+  s_134d8b1269530e::t_8ec3b2c3be7d32 1-101
+decluttering/Components/DayBarView.swift
+  s_134d8b1269530e::t_ea633c785a7704 1-123
+decluttering/Components/DragSelectController.swift
+  s_773ffcd0f8d4bf::t_b60e8e027711fe 1-178
+decluttering/Components/LastLookViewController.swift
+  s_134d8b1269530e::t_0ebcf184d7518e 1-154
+decluttering/Components/MediaFilterBar.swift
+  s_134d8b1269530e::t_08f91a0e8b9cb6 1-77
+decluttering/Components/StatsViewController.swift
+  s_134d8b1269530e::t_fcb05f4931edcd 1-201
+decluttering/Components/YearPickerViewController.swift
+  s_134d8b1269530e::t_16a9c9bcced07e 1-109
+decluttering/OnThisDay/Entities/MemoryEntities.swift
+  s_61451e80e9ae51::t_aa939d4172e155 1-90
+decluttering/OnThisDay/Interactor/OnThisDayInteractor.swift
+  s_61451e80e9ae51::t_cc1224adc5166e 1-158
+decluttering/OnThisDay/OnThisDayContracts.swift
+  s_61451e80e9ae51::t_7dd9deadf35dcd 1-114
+decluttering/OnThisDay/Presenter/OnThisDayPresenter.swift
+  s_61451e80e9ae51::t_0be7994a2ea01e 1-445
+decluttering/OnThisDay/Router/OnThisDayRouter.swift
+  s_134d8b1269530e::t_2d4da161aff05a 1-85
+decluttering/OnThisDay/View/BoothViews.swift
+  s_134d8b1269530e::t_f96eee197b6a7e 1-670
+decluttering/OnThisDay/View/OnThisDayViewController.swift
+  s_134d8b1269530e::t_f63e71d6dcfc5a 1-625
+decluttering/PhotoViewer/PhotoViewerContracts.swift
+  s_61451e80e9ae51::t_fccbf4dee4a546 1-50
+decluttering/PhotoViewer/Presenter/PhotoViewerPresenter.swift
+  s_61451e80e9ae51::t_69b4f4b787d32f 1-97
+decluttering/PhotoViewer/Router/PhotoViewerRouter.swift
+  s_61451e80e9ae51::t_1aaf4708e4c81e 1-37
+decluttering/PhotoViewer/View/PhotoViewerViewController.swift
+  s_134d8b1269530e::t_caf3e15daf2a25 1-521
+decluttering/SceneDelegate.swift
+  s_134d8b1269530e::t_52168b1ae0f08e 1-55
+decluttering/Services/BoothHaptics.swift
+  s_61451e80e9ae51::t_49a9416a2c8a7e 1-56
+decluttering/Services/ReminderService.swift
+  s_61451e80e9ae51::t_93b1335e59102e 1-43
+decluttering/Services/StickerBook.swift
+  s_134d8b1269530e::t_03af1c34aef6b5 1-125
+decluttering/Services/TwinFinder.swift
+  s_61451e80e9ae51::t_24e50d81a6fe7c 1-96
+decluttering/SwipeSort/Presenter/SwipeSortPresenter.swift
+  s_61451e80e9ae51::t_aa74c489dd61d8 1-123
+decluttering/SwipeSort/Router/SwipeSortRouter.swift
+  s_61451e80e9ae51::t_005f85a02441a5 1-35
+decluttering/SwipeSort/SwipeSortContracts.swift
+  s_61451e80e9ae51::t_dde6ae2379b5d6 1-48
+decluttering/SwipeSort/View/SwipeSortViewController.swift
+  s_134d8b1269530e::t_16e7570796e3e0 1-602
+declutteringTests/ContentAndLogicTests.swift
+  s_61451e80e9ae51::t_2a5419cbf5fb64 1-185
+declutteringTests/DragSelectTests.swift
+  s_c97f8f3eea2f45::t_b6605f120d6df8 1-39
+declutteringTests/Mocks.swift
+  s_61451e80e9ae51::t_99e2b9a050e554 1-163
+declutteringTests/OnThisDayPresenterTests.swift
+  s_61451e80e9ae51::t_0131de537c0d80 1-654
+declutteringTests/PhotoViewerPresenterTests.swift
+  s_61451e80e9ae51::t_ddedd497e6187d 1-133
+declutteringTests/SwipeSortPresenterTests.swift
+  s_61451e80e9ae51::t_3eb27ad2eb35d0 1-245
+declutteringTests/ThemeTests.swift
+  s_134d8b1269530e::t_73758c69696b4e 1-70
+docs/index.html
+  s_134d8b1269530e::t_84a6a7a0110011 1-319
+DeclutteringWidget/Assets.xcassets/AccentColor.colorset/Contents.json
+  s_134d8b1269530e::t_006d5eba77b9d2 1-11
+DeclutteringWidget/Assets.xcassets/AppIcon.appiconset/Contents.json
+  s_134d8b1269530e::t_7dc6ccbd6bd7b9 1-35
+DeclutteringWidget/Assets.xcassets/Contents.json
+  s_134d8b1269530e::t_64481339b9b72e 1-6
+DeclutteringWidget/Assets.xcassets/WidgetBackground.colorset/Contents.json
+  s_134d8b1269530e::t_d3be3e5a39fe3c 1-11
+DeclutteringWidget/DeclutteringWidgetBundle.swift
+  s_134d8b1269530e::t_226a527e1a9496 1-16
+DeclutteringWidgetExtension.entitlements
+  s_134d8b1269530e::t_350c27c3447a27 1-10
+decluttering.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+  s_134d8b1269530e::t_daa31bf365c6bc 1-7
+decluttering/AppDelegate.swift
+  s_134d8b1269530e::t_acd0da671b1eb7 1-36
+decluttering/Assets.xcassets/AccentColor.colorset/Contents.json
+  s_134d8b1269530e::t_98e8d8e3724706 1-11
+decluttering/Assets.xcassets/Contents.json
+  s_134d8b1269530e::t_1896049989bb4f 1-6
+decluttering/Base.lproj/LaunchScreen.storyboard
+  s_134d8b1269530e::t_6b63c905452044 1-25
+decluttering/ContentView.swift
+  s_134d8b1269530e::t_ad05a93d86fa3a 1-24
+decluttering/Info.plist
+  s_134d8b1269530e::t_78fa77d2366971 1-23
+decluttering/Theme/ThemeHostViewController.swift
+  s_134d8b1269530e::t_ad0b185e5ca93d 1-56
+decluttering/Theme/ThemePickerViewController.swift
+  s_134d8b1269530e::t_213a347d79e602 1-234
+decluttering/decluttering.entitlements
+  s_134d8b1269530e::t_fb1b1de2ec8d2c 1-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c92316dd7488ff58f3ced778477fc08b143c590e",
+  "prompts": {},
+  "sessions": {
+    "s_134d8b1269530e": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "97337146-fa16-438a-abc3-90a08fe2fb66",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_61451e80e9ae51": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "3d7f017e-c40e-4c0a-9647-1cb515d1736b",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_773ffcd0f8d4bf": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "a8d319f3-178a-45c2-b996-17e36b57c7e0",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_c97f8f3eea2f45": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "ef6e56ad-3c52-4801-b596-6c33ba25a461",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
