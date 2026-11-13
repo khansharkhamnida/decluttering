@@ -127,15 +127,54 @@ struct SwipeSortPresenterTests {
         #expect(summary?.remaining == 0)
     }
 
-    @Test func closingAlwaysGoesStraightHome() {
+    @Test func closingWithAPileStopsAtTheSummaryInsteadOfLosingIt() {
         let presenter = makePresenter()
         presenter.viewDidLoad()
         presenter.didDecide(.bin)
         presenter.didTapClose()
 
+        #expect(router.closed == 0)
+        #expect(view.summaries.last?.toBin == 1)
+        #expect(view.summaries.last?.remaining == 2)
+        #expect(interactor.deletedIDs.isEmpty)
+    }
+
+    @Test func aPileFromPartWayThroughCanBeBinnedWithoutFinishingTheStack() async {
+        let presenter = makePresenter(ids: ["a", "b", "c", "d"])
+        presenter.viewDidLoad()
+        presenter.didDecide(.bin)
+        presenter.didDecide(.keep)
+        presenter.didTapClose()
+        presenter.didTapBinPending()
+        router.pendingConfirm?()
+        _ = await eventually(timeout: 5) { router.closed == 1 }
+
+        #expect(interactor.deletedIDs == [["a"]])
+        #expect(decisions.binned == ["a"])
+    }
+
+    @Test func keepSortingGoesBackToTheNextCard() {
+        let presenter = makePresenter(ids: ["a", "b", "c"])
+        presenter.viewDidLoad()
+        presenter.didDecide(.bin)
+        presenter.didTapClose()
+        presenter.didTapKeepSorting()
+
+        #expect(view.fronts.last == "b")
+        #expect(router.closed == 0)
+        presenter.didDecide(.keep)
+        #expect(view.fronts.last == "c")
+    }
+
+    @Test func closingFromTheMiddleSummaryGoesHome() {
+        let presenter = makePresenter()
+        presenter.viewDidLoad()
+        presenter.didDecide(.bin)
+        presenter.didTapClose()
+        presenter.didTapClose()
+
         #expect(router.closed == 1)
         #expect(finished.count == 1)
-        #expect(decisions.binned.isEmpty)
         #expect(interactor.deletedIDs.isEmpty)
     }
 
@@ -230,6 +269,17 @@ struct SwipeSortPresenterTests {
         presenter.didDecide(.keep)
         presenter.didDecide(.keep)
         #expect(router.breaks.count == 1)
+    }
+
+    @Test func takingTheBreakWithAPileShowsTheSummary() {
+        decisions.earlierToday = BreakPolicy.gentleAt - 1
+        let presenter = makePresenter(ids: ["a", "b", "c"])
+        presenter.viewDidLoad()
+        presenter.didDecide(.bin)
+        router.breakAction?()
+
+        #expect(router.closed == 0)
+        #expect(view.summaries.last?.toBin == 1)
     }
 
     @Test func takingTheBreakGoesHome() {

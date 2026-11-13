@@ -33,6 +33,7 @@ protocol SwipeSortPresenterProtocol: AnyObject {
     func didDecide(_ decision: SortDecision)
     func didTapUndo()
     func didTapClose()
+    func didTapKeepSorting()
     func didTapBinPending()
     func didTapFinish()
     func loadImage(id: String, targetSize: CGSize, completion: @escaping (UIImage?) -> Void) -> ThumbnailToken?

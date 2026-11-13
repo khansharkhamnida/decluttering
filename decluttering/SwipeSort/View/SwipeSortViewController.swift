@@ -571,6 +571,11 @@ extension SwipeSortViewController: SwipeSortViewProtocol {
                 self?.presenter.didTapBinPending()
             })
         }
+        if summary.remaining > 0 {
+            summaryStack.addArrangedSubview(summaryButton("Keep sorting", symbol: nil, filled: summary.toBin == 0) { [weak self] in
+                self?.presenter.didTapKeepSorting()
+            })
+        }
         summaryStack.addArrangedSubview(summaryButton(summary.toBin > 0 ? "Close without binning" : "Done", symbol: nil, filled: false) { [weak self] in
             self?.presenter.didTapFinish()
         })

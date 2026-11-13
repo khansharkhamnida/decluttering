@@ -53,7 +53,7 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
     private func checkBreak() {
         let count = decisions.todayCount() + pendingBin.count
         guard let level = breaks.nudge(forCount: count) else { return }
-        router.showBreakReminder(level: level, count: count) { [weak self] in self?.didTapFinish() }
+        router.showBreakReminder(level: level, count: count) { [weak self] in self?.didTapClose() }
     }
 
     func didTapUndo() {
@@ -70,9 +70,18 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
         render(.undo(last.decision))
     }
 
-    /// ✕ always goes home; kept photos are already saved and the bin pile is never deleted.
+    /// ✕ with photos in the bin pile stops at the summary, so they can be binned without sorting the whole
+    /// stack. With nothing waiting it goes home; kept photos are already saved and the pile is never deleted unasked.
     func didTapClose() {
-        didTapFinish()
+        guard !showingSummary, !pendingBin.isEmpty else { return didTapFinish() }
+        showingSummary = true
+        render(.none)
+    }
+
+    func didTapKeepSorting() {
+        guard showingSummary, index < items.count else { return }
+        showingSummary = false
+        render(.none)
     }
 
     func didTapFinish() {
