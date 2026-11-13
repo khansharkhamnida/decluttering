@@ -33,6 +33,14 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
     private var player: AVPlayer?
     private var endObserver: NSObjectProtocol?
 
+    private let scrubBar = UIView()
+    private let scrubber = UISlider()
+    private let elapsedLabel = UILabel()
+    private let durationLabel = UILabel()
+    private var timeObserver: Any?
+    private var isScrubbing = false
+    private var resumeAfterScrub = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         scrollView.delegate = self
@@ -83,6 +91,8 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
         hint.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(hint)
 
+        setUpScrubber()
+
         NSLayoutConstraint.activate([
             spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -103,6 +113,85 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    /// A seek bar so a long video can be skipped through instead of watched.
+    private func setUpScrubber() {
+        scrubBar.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        scrubBar.layer.cornerRadius = 18
+        scrubBar.isHidden = true
+        scrubBar.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(scrubBar)
+
+        for label in [elapsedLabel, durationLabel] {
+            label.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .semibold)
+            label.textColor = BoothTheme.onViewer
+            label.text = Self.timeText(0)
+            label.setContentHuggingPriority(.required, for: .horizontal)
+        }
+        durationLabel.textAlignment = .right
+
+        scrubber.minimumTrackTintColor = BoothTheme.paper
+        scrubber.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.3)
+        scrubber.thumbTintColor = BoothTheme.paper
+        scrubber.accessibilityLabel = "Video position"
+        scrubber.addAction(UIAction { [weak self] _ in self?.scrubBegan() }, for: .touchDown)
+        scrubber.addAction(UIAction { [weak self] _ in self?.scrubChanged() }, for: .valueChanged)
+        scrubber.addAction(UIAction { [weak self] _ in self?.scrubEnded() }, for: [.touchUpInside, .touchUpOutside, .touchCancel])
+
+        let row = UIStackView(arrangedSubviews: [elapsedLabel, scrubber, durationLabel])
+        row.spacing = 10
+        row.alignment = .center
+        row.translatesAutoresizingMaskIntoConstraints = false
+        scrubBar.addSubview(row)
+
+        NSLayoutConstraint.activate([
+            scrubBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            scrubBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            scrubBar.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -104),
+            scrubBar.heightAnchor.constraint(equalToConstant: 36),
+            row.leadingAnchor.constraint(equalTo: scrubBar.leadingAnchor, constant: 14),
+            row.trailingAnchor.constraint(equalTo: scrubBar.trailingAnchor, constant: -14),
+            row.centerYAnchor.constraint(equalTo: scrubBar.centerYAnchor)
+        ])
+    }
+
+    private static func timeText(_ seconds: Double) -> String {
+        let total = max(0, Int(seconds.isFinite ? seconds : 0))
+        return String(format: "%d:%02d", total / 60, total % 60)
+    }
+
+    private func updateScrubber(at time: CMTime) {
+        guard !isScrubbing, let item = player?.currentItem else { return }
+        let total = item.duration.seconds
+        guard total.isFinite, total > 0 else { return }
+        scrubber.maximumValue = Float(total)
+        scrubber.value = Float(time.seconds)
+        elapsedLabel.text = Self.timeText(time.seconds)
+        durationLabel.text = Self.timeText(total)
+    }
+
+    private func scrubBegan() {
+        guard let player else { return }
+        isScrubbing = true
+        resumeAfterScrub = player.timeControlStatus != .paused
+        player.pause()
+    }
+
+    private func scrubChanged() {
+        elapsedLabel.text = Self.timeText(Double(scrubber.value))
+        player?.seek(to: CMTime(seconds: Double(scrubber.value), preferredTimescale: 600))
+    }
+
+    private func scrubEnded() {
+        guard let player else { return }
+        let target = CMTime(seconds: Double(scrubber.value), preferredTimescale: 600)
+        let shouldResume = resumeAfterScrub
+        player.seek(to: target, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+            self?.isScrubbing = false
+            if shouldResume { self?.player?.play() }
+        }
+        playButton.isHidden = shouldResume
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -163,12 +252,26 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
             self?.player?.seek(to: .zero)
             self?.player?.pause()
             self?.playButton.isHidden = false
+            self?.scrubber.value = 0
+            self?.elapsedLabel.text = Self.timeText(0)
+        }
+        scrubber.value = 0
+        scrubber.maximumValue = 1
+        elapsedLabel.text = Self.timeText(0)
+        durationLabel.text = Self.timeText(0)
+        scrubBar.isHidden = false
+        timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.25, preferredTimescale: 600), queue: .main) { [weak self] time in
+            self?.updateScrubber(at: time)
         }
         player.play()
     }
 
     func stopPlayback() {
         player?.pause()
+        if let timeObserver { player?.removeTimeObserver(timeObserver) }
+        timeObserver = nil
+        isScrubbing = false
+        scrubBar.isHidden = true
         player = nil
         playerView.playerLayer.player = nil
         playerView.isHidden = true
