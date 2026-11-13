@@ -1,0 +1,23 @@
+DeclutteringWidget/PrivacyInfo.xcprivacy
+  s_e040267076e5e2::t_0e75a9f9b03745 1-23
+decluttering/Info.plist
+  s_e040267076e5e2::t_0e75a9f9b03745 5-6
+decluttering/PrivacyInfo.xcprivacy
+  s_e040267076e5e2::t_0e75a9f9b03745 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "76afaa8b3739e76ea847c27aa75b9324d34a7d55",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
