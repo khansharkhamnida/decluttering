@@ -93,6 +93,12 @@ final class DecisionStore: DecisionRecording {
         return DispatchQueue.main.sync { MainActor.assumeIsolated { shared.keptIDs() } }
     }
 
+    /// The current day streak, read the same way for the widget.
+    nonisolated static func streakSnapshot() -> Int {
+        if Thread.isMainThread { return MainActor.assumeIsolated { shared.currentStreak() } }
+        return DispatchQueue.main.sync { MainActor.assumeIsolated { shared.currentStreak() } }
+    }
+
     func recordKept(ids: [String]) {
         let existing = keptIDs()
         for id in ids where !existing.contains(id) {
@@ -105,6 +111,7 @@ final class DecisionStore: DecisionRecording {
     func recordBinned(ids: [String]) {
         ids.forEach { context.insert(Decision(assetID: $0, kind: .binned)) }
         try? context.save()
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     func removeKept(ids: [String]) {
@@ -146,7 +153,7 @@ final class DecisionStore: DecisionRecording {
     }
 
     /// Consecutive days with at least one decision. A day with nothing yet doesn't break yesterday's streak.
-    private func currentStreak(calendar: Calendar = .current) -> Int {
+    func currentStreak(calendar: Calendar = .current) -> Int {
         let all = (try? context.fetch(FetchDescriptor<Decision>())) ?? []
         let days = Set(all.map { calendar.startOfDay(for: $0.date) })
 

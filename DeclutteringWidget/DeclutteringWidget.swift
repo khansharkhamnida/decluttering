@@ -14,7 +14,8 @@ struct MemoryEntry: TimelineEntry {
     enum Content {
         case photo(UIImage, date: Date, id: String)
         case noAccess
-        case empty
+        /// Nothing left to sort for today. `hadPhotos` is false when no past year has a photo from this date.
+        case caughtUp(streak: Int, hadPhotos: Bool)
     }
 
     let date: Date
@@ -28,7 +29,7 @@ struct Provider: TimelineProvider {
     private let refreshInterval: TimeInterval = 30 * 60
 
     func placeholder(in context: Context) -> MemoryEntry {
-        MemoryEntry(date: .now, content: .empty)
+        MemoryEntry(date: .now, content: .caughtUp(streak: 0, hadPhotos: true))
     }
 
     func getSnapshot(in context: Context, completion: @escaping (MemoryEntry) -> Void) {
@@ -53,9 +54,9 @@ struct Provider: TimelineProvider {
         let kept = DecisionStore.keptIDsSnapshot()
         let sections = PhotoLibraryService().loadOnThisDay()
         let assets = interleave(sections.map { $0.assets.filter { !kept.contains($0.localIdentifier) } }, limit: count)
-        guard !assets.isEmpty else {
-            return [MemoryEntry(date: .now, content: .empty)]
-        }
+        let hadPhotos = sections.contains { !$0.assets.isEmpty }
+        let caughtUp = [MemoryEntry(date: .now, content: .caughtUp(streak: DecisionStore.streakSnapshot(), hadPhotos: hadPhotos))]
+        guard !assets.isEmpty else { return caughtUp }
 
         let options = PHImageRequestOptions()
         options.isSynchronous = true
@@ -73,7 +74,7 @@ struct Provider: TimelineProvider {
             let entryDate = Date.now.addingTimeInterval(refreshInterval * Double(entries.count))
             entries.append(MemoryEntry(date: entryDate, content: .photo(image, date: created, id: asset.localIdentifier)))
         }
-        return entries.isEmpty ? [MemoryEntry(date: .now, content: .empty)] : entries
+        return entries.isEmpty ? caughtUp : entries
     }
 
     /// Takes one photo per year in turn so every year is represented.
@@ -98,53 +99,141 @@ struct Provider: TimelineProvider {
 
 struct DeclutteringWidgetEntryView: View {
     let entry: MemoryEntry
+    @Environment(\.widgetFamily) private var family
 
     private var cream: Color { Color(BoothTheme.paper) }
     private var wine: Color { Color(BoothTheme.ink) }
     private var onBackground: Color { Color(BoothTheme.onBackground) }
+    private var themeBackground: Color { Color(BoothTheme.current.background.base) }
 
     private func themed(_ size: CGFloat, _ weight: UIFont.Weight) -> Font {
         Font(BoothTheme.font(size, weight, scaling: false))
     }
 
     var body: some View {
+        content
+            .containerBackground(for: .widget) { background }
+    }
+
+    @ViewBuilder
+    private var background: some View {
+        if case .photo = entry.content, family == .systemMedium { cream } else { themeBackground }
+    }
+
+    @ViewBuilder
+    private var content: some View {
         switch entry.content {
         case .photo(let image, let date, let id):
-            VStack(spacing: 6) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                HStack(alignment: .center, spacing: 6) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text(yearsAgoText(for: date))
-                            .font(themed(14, .heavy))
-                            .foregroundStyle(wine)
-                        Text(date.formatted(.dateTime.day().month(.abbreviated).year()))
-                            .font(themed(10, .semibold))
-                            .foregroundStyle(wine.opacity(0.75))
-                    }
-                    Spacer(minLength: 0)
-                    // Interactive: keeps this photo without opening the app
-                    Button(intent: KeepPhotoIntent(assetID: id)) {
-                        Image(systemName: "heart.fill")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(cream)
-                            .frame(width: 28, height: 28)
-                            .background(Circle().fill(wine))
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Keep this photo")
-                }
-                .frame(height: 28)
+            if family == .systemMedium {
+                sideBySide(image: image, date: date, id: id)
+            } else {
+                pillCard(image: image, date: date, id: id)
             }
-            .padding(8)
         case .noAccess:
             message("Open Decluttering and allow Full Access to Photos", icon: "lock.fill")
-        case .empty:
-            message("Nothing to bin from this day.\nSnap. Sort. Bin.", icon: "sparkles")
+        case .caughtUp(let streak, let hadPhotos):
+            caughtUp(streak: streak, hadPhotos: hadPhotos)
         }
+    }
+
+    // MARK: Photo layouts
+
+    /// Small and large: the photo sits inside the theme colour with one small label on top.
+    private func pillCard(image: UIImage, date: Date, id: String) -> some View {
+        let large = family == .systemLarge
+        return framedPhoto(image, radius: large ? 30 : 22)
+            .overlay(alignment: .bottom) {
+                HStack(spacing: 6) {
+                    Text(yearsAgoText(for: date))
+                        .font(themed(large ? 17 : 13, .heavy))
+                        .foregroundStyle(wine)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                    Spacer(minLength: 0)
+                    keepButton(id: id, size: large ? 34 : 26)
+                }
+                .padding(.leading, 12)
+                .padding(5)
+                .background(Capsule().fill(cream.opacity(0.94)))
+                .padding(large ? 10 : 7)
+            }
+            .padding(large ? 14 : 10)
+    }
+
+    /// Medium: photo on the left, when and Keep on the right.
+    private func sideBySide(image: UIImage, date: Date, id: String) -> some View {
+        HStack(spacing: 12) {
+            framedPhoto(image, radius: 18)
+                .aspectRatio(1, contentMode: .fit)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(yearsAgoText(for: date))
+                    .font(themed(22, .heavy))
+                    .foregroundStyle(wine)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(date.formatted(.dateTime.day().month(.abbreviated).year()))
+                    .font(themed(12, .semibold))
+                    .foregroundStyle(wine.opacity(0.75))
+                Spacer(minLength: 0)
+                Button(intent: KeepPhotoIntent(assetID: id)) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "heart.fill")
+                        Text("Keep")
+                    }
+                    .font(themed(13, .heavy))
+                    .foregroundStyle(cream)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(wine))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Keep this photo")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 6)
+        }
+        .padding(12)
+    }
+
+    private func framedPhoto(_ image: UIImage, radius: CGFloat) -> some View {
+        Color.clear
+            .overlay { Image(uiImage: image).resizable().scaledToFill() }
+            .clipShape(RoundedRectangle(cornerRadius: radius, style: .continuous))
+    }
+
+    /// Interactive: keeps this photo without opening the app.
+    private func keepButton(id: String, size: CGFloat) -> some View {
+        Button(intent: KeepPhotoIntent(assetID: id)) {
+            Image(systemName: "heart.fill")
+                .font(.system(size: size * 0.45, weight: .bold))
+                .foregroundStyle(cream)
+                .frame(width: size, height: size)
+                .background(Circle().fill(wine))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Keep this photo")
+    }
+
+    // MARK: Messages
+
+    private func caughtUp(streak: Int, hadPhotos: Bool) -> some View {
+        let title = hadPhotos ? "All sorted for today." : "No photos from this day."
+        let streakLine = streak > 0 ? "\(streak)-day streak" : "Sort a photo to start a streak"
+        return VStack(spacing: 6) {
+            BinnyMark()
+                .frame(maxHeight: family == .systemSmall ? 52 : 80)
+            Text(title)
+                .font(themed(family == .systemSmall ? 12 : 14, .heavy))
+                .foregroundStyle(onBackground)
+                .multilineTextAlignment(.center)
+            Label(streakLine, systemImage: "flame.fill")
+                .font(themed(family == .systemSmall ? 10 : 12, .semibold))
+                .foregroundStyle(onBackground.opacity(0.8))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func message(_ text: String, icon: String) -> some View {
@@ -181,9 +270,6 @@ struct DeclutteringWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             DeclutteringWidgetEntryView(entry: entry)
-                .containerBackground(for: .widget) {
-                    if case .photo = entry.content { Color(BoothTheme.surface) } else { Color(BoothTheme.current.background.base) }
-                }
         }
         .configurationDisplayName("On This Day")
         .description("Photos from this day in past years.")
@@ -195,6 +281,7 @@ struct DeclutteringWidget: Widget {
 #Preview(as: .systemSmall) {
     DeclutteringWidget()
 } timeline: {
-    MemoryEntry(date: .now, content: .empty)
+    MemoryEntry(date: .now, content: .caughtUp(streak: 3, hadPhotos: true))
+    MemoryEntry(date: .now, content: .caughtUp(streak: 0, hadPhotos: false))
     MemoryEntry(date: .now, content: .noAccess)
 }
