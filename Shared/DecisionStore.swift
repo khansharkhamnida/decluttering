@@ -95,11 +95,12 @@ final class DecisionStore: DecisionRecording {
 
     /// The current day streak, read the same way for the widget.
     nonisolated static func streakSnapshot() -> Int {
-        // Only the decision days are read on the main thread; the photo lookups run on the caller's thread.
-        let days: Set<Date>
-        if Thread.isMainThread { days = MainActor.assumeIsolated { shared.decisionDays() } }
-        else { days = DispatchQueue.main.sync { MainActor.assumeIsolated { shared.decisionDays() } } }
-        return streak(decisionDays: days, hadPhotosOn: PhotoLibraryService().hadPhotosPredicate())
+        // Only the decision days and kept IDs are read on the main thread; the photo lookups run on the caller's thread.
+        let read: @MainActor () -> (Set<Date>, Set<String>) = { (shared.decisionDays(), shared.keptIDs()) }
+        let (days, kept) = Thread.isMainThread
+            ? MainActor.assumeIsolated(read)
+            : DispatchQueue.main.sync { MainActor.assumeIsolated(read) }
+        return streak(decisionDays: days, hadPhotosOn: PhotoLibraryService().hadPhotosPredicate(keptIDs: kept))
     }
 
     func recordKept(ids: [String]) {
@@ -164,7 +165,7 @@ final class DecisionStore: DecisionRecording {
     /// Consecutive days with at least one decision, skipping days with nothing to sort.
     /// `hadPhotosOn` defaults to the photo library; without photo access every day counts.
     func currentStreak(calendar: Calendar = .current, hadPhotosOn: (@Sendable (Date) -> Bool)? = nil) -> Int {
-        let predicate = hadPhotosOn ?? PhotoLibraryService().hadPhotosPredicate(calendar: calendar)
+        let predicate = hadPhotosOn ?? PhotoLibraryService().hadPhotosPredicate(calendar: calendar, keptIDs: keptIDs())
         return Self.streak(decisionDays: decisionDays(calendar: calendar), hadPhotosOn: predicate, calendar: calendar)
     }
 

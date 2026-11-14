@@ -67,32 +67,39 @@ nonisolated final class PhotoLibraryService: Sendable {
 
     /// A check for "did this day have anything to sort?", used by the streak. Nil when photo access
     /// isn't granted, so callers can fall back to counting every day.
-    /// A day counts as having photos if any year up to its own has a photo on that month and day.
-    func hadPhotosPredicate(calendar: Calendar = .current) -> (@Sendable (Date) -> Bool)? {
+    /// A day counts as having photos if any year up to its own has a photo on that month and day that
+    /// isn't already kept, since kept photos are hidden and leave nothing to sort.
+    func hadPhotosPredicate(calendar: Calendar = .current, keptIDs: Set<String> = []) -> (@Sendable (Date) -> Bool)? {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         guard status == .authorized || status == .limited else { return nil }
         let oldestYear = oldestPhotoYear(calendar: calendar)
         return { [self] day in
             guard let oldestYear else { return false }
-            return hasPhotos(on: day, oldestYear: oldestYear, calendar: calendar)
+            return hasPhotos(on: day, oldestYear: oldestYear, calendar: calendar, keptIDs: keptIDs)
         }
     }
 
-    private func hasPhotos(on day: Date, oldestYear: Int, calendar: Calendar) -> Bool {
+    private func hasPhotos(on day: Date, oldestYear: Int, calendar: Calendar, keptIDs: Set<String>) -> Bool {
         let year = calendar.component(.year, from: day)
         let dates = DateFactory.generatePastDates(using: calendar, totalYears: max(year - oldestYear + 1, 1), now: day)
-        return dates.contains { hasAssets(on: $0, calendar: calendar) }
+        return dates.contains { hasAssets(on: $0, calendar: calendar, excluding: keptIDs) }
     }
 
-    private func hasAssets(on date: Date, calendar: Calendar) -> Bool {
+    private func hasAssets(on date: Date, calendar: Calendar, excluding keptIDs: Set<String>) -> Bool {
         let start = calendar.startOfDay(for: date)
         guard let end = calendar.date(byAdding: .day, value: 1, to: start) else { return false }
         let options = PHFetchOptions()
         options.predicate = NSPredicate(
             format: "creationDate >= %@ AND creationDate < %@", start as NSDate, end as NSDate
         )
-        options.fetchLimit = 1
-        return PHAsset.fetchAssets(with: options).count > 0
+        if keptIDs.isEmpty { options.fetchLimit = 1 }
+        let assets = PHAsset.fetchAssets(with: options)
+        guard !keptIDs.isEmpty else { return assets.count > 0 }
+        var found = false
+        assets.enumerateObjects { asset, _, stop in
+            if !keptIDs.contains(asset.localIdentifier) { found = true; stop.pointee = true }
+        }
+        return found
     }
 
     func delete(_ assets: [PHAsset]) async throws {
