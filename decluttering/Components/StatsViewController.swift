@@ -10,6 +10,8 @@ final class StatsViewController: UIViewController {
     private let onResetKept: () -> Void
 
     private let reminderSwitch = UISwitch()
+    private let keepersSwitch = UISwitch()
+    private let keepersSettings = KeepersAlbumSettings()
 
     init(stats: BoothStats, earnedStickers: Set<String>, reminderOn: Bool,
          onToggleReminder: @escaping (Bool, @escaping (Bool) -> Void) -> Void,
@@ -88,7 +90,7 @@ final class StatsViewController: UIViewController {
             reminderRow.trailingAnchor.constraint(equalTo: reminderCard.trailingAnchor)
         ])
 
-        var views: [UIView] = [title, tiles, line, reminderCard]
+        var views: [UIView] = [title, tiles, line, reminderCard, keepersCard()]
         if stats.kept > 0 {
             var config = UIButton.Configuration.plain()
             config.baseForegroundColor = BoothTheme.ink
@@ -150,6 +152,55 @@ final class StatsViewController: UIViewController {
             row?.addArrangedSubview(StickerView(sticker: sticker, earned: earnedStickers.contains(sticker.id), tilt: tilt))
         }
         return grid
+    }
+
+    /// Switch for the optional Photos album, with a short note on what it does.
+    private func keepersCard() -> UIView {
+        let caption = "Add kept photos to a \u{201C}Decluttering Keepers\u{201D} album in Photos"
+        let label = UILabel()
+        label.text = caption
+        label.font = BoothTheme.font(16, .bold)
+        label.textColor = BoothTheme.ink
+        label.numberOfLines = 0
+        label.isAccessibilityElement = false
+
+        keepersSwitch.isOn = keepersSettings.isEnabled
+        keepersSwitch.onTintColor = BoothTheme.ink
+        keepersSwitch.setContentHuggingPriority(.required, for: .horizontal)
+        keepersSwitch.setContentCompressionResistancePriority(.required, for: .horizontal)
+        keepersSwitch.accessibilityLabel = "Add kept photos to a Decluttering Keepers album in Photos"
+        keepersSwitch.addAction(UIAction { [weak self] _ in
+            guard let self else { return }
+            self.keepersSettings.isEnabled = self.keepersSwitch.isOn
+        }, for: .valueChanged)
+
+        let row = UIStackView(arrangedSubviews: [label, keepersSwitch])
+        row.alignment = .center
+        row.spacing = 12
+
+        let note = UILabel()
+        note.text = "Bringing your kept photos back doesn\u{2019}t change this album."
+        note.font = BoothTheme.font(12, .semibold)
+        note.textColor = BoothTheme.ink.withAlphaComponent(0.7)
+        note.numberOfLines = 0
+
+        let content = UIStackView(arrangedSubviews: [row, note])
+        content.axis = .vertical
+        content.spacing = 6
+        content.isLayoutMarginsRelativeArrangement = true
+        content.layoutMargins = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        let card = UIView()
+        card.backgroundColor = .white.withAlphaComponent(0.6)
+        card.layer.cornerRadius = 14
+        content.translatesAutoresizingMaskIntoConstraints = false
+        card.addSubview(content)
+        NSLayoutConstraint.activate([
+            content.topAnchor.constraint(equalTo: card.topAnchor),
+            content.bottomAnchor.constraint(equalTo: card.bottomAnchor),
+            content.leadingAnchor.constraint(equalTo: card.leadingAnchor),
+            content.trailingAnchor.constraint(equalTo: card.trailingAnchor)
+        ])
+        return card
     }
 
     private func reminderChanged() {

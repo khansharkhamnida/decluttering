@@ -8,6 +8,7 @@ final class OnThisDayPresenter: OnThisDayPresenterProtocol {
     private let decisions: DecisionRecording
     private let reminders: ReminderScheduling
     private let breaks: BreakPolicy
+    private let keepersAlbum: KeepersAlbumManaging
 
     private(set) var isSelecting = false
     private var selectedIDs = Set<String>()
@@ -28,7 +29,9 @@ final class OnThisDayPresenter: OnThisDayPresenterProtocol {
     private var twinsComputedFor: [[String]]?
 
     init(view: OnThisDayViewProtocol, interactor: OnThisDayInteractorProtocol, router: OnThisDayRouterProtocol,
-         decisions: DecisionRecording, reminders: ReminderScheduling, breaks: BreakPolicy) {
+         decisions: DecisionRecording, reminders: ReminderScheduling, breaks: BreakPolicy,
+         keepersAlbum: KeepersAlbumManaging = NoOpKeepersAlbum()) {
+        self.keepersAlbum = keepersAlbum
         self.view = view
         self.interactor = interactor
         self.router = router
@@ -147,6 +150,7 @@ final class OnThisDayPresenter: OnThisDayPresenterProtocol {
     /// VoiceOver actions on a single photo, so nobody has to enter select mode to keep or bin one.
     func didRequestKeep(id: String) {
         decisions.recordKept(ids: [id])
+        keepersAlbum.didKeep(ids: [id])
         BoothHaptics.shared.sparkle()
         view?.showCelebration(text: BoothVoice.keepLine())
         updateStats(afterAction: true)
@@ -264,6 +268,7 @@ final class OnThisDayPresenter: OnThisDayPresenterProtocol {
     }
 
     private func performBin(_ ids: [String]) {
+        guard !ids.isEmpty else { return }
         Task {
             do {
                 guard try await interactor.delete(ids: ids) == .deleted else { return }
@@ -272,6 +277,7 @@ final class OnThisDayPresenter: OnThisDayPresenterProtocol {
                 selectedIDs.removeAll()
                 view?.setSelection(active: false, count: 0)
                 view?.showCelebration(text: BoothVoice.celebration(count: ids.count))
+                view?.showBinned(count: ids.count)
                 updateStats(afterAction: true)
                 refresh(force: true)
                 checkBreak()

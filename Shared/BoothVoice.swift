@@ -103,6 +103,14 @@ nonisolated enum BoothVoice {
         return lines.randomElement() ?? lines[0]
     }
 
+    static func binnedNotice(count: Int) -> String {
+        let photos = count == 1 ? "1 photo" : "\(count) photos"
+        return "Moved \(photos) to Recently Deleted. \(count == 1 ? "It stays" : "They stay") there for about 30 days."
+    }
+
+    static let openPhotosTitle = "Open Photos"
+    static let photosURL = URL(string: "photos-redirect://")
+
     static func reportLine(binned: Int, streak: Int) -> String {
         switch (binned, streak) {
         case (0, _): return "Your very first bin starts the streak."

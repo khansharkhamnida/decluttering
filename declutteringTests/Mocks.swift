@@ -36,6 +36,7 @@ final class MockOnThisDayView: OnThisDayViewProtocol {
     var twinsBanners: [BannerViewModel?] = []
     var selectedIDs: Set<String> = []
     var celebrations: [String] = []
+    var binnedCounts: [Int] = []
     var loading: [Bool] = []
     var dayChips: [[DayChipViewModel]] = []
     var daySelections: [Int] = []
@@ -54,6 +55,7 @@ final class MockOnThisDayView: OnThisDayViewProtocol {
     func show(twins: BannerViewModel?) { twinsBanners.append(twins) }
     func select(ids: Set<String>) { selectedIDs = ids }
     func showCelebration(text: String) { celebrations.append(text) }
+    func showBinned(count: Int) { binnedCounts.append(count) }
     func show(isLoading: Bool) { loading.append(isLoading) }
     func show(days: [DayChipViewModel], selected: Int) { dayChips.append(days); daySelections.append(selected) }
     func show(filters: [FilterChipViewModel], selected: MediaFilter) { filterChips.append(filters); filterSelections.append(selected) }

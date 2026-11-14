@@ -38,25 +38,27 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<MemoryEntry>) -> Void) {
         let entries = makeEntries(count: maxEntries)
-        let calendar = Calendar.current
-        let midnight = calendar.nextDate(after: .now, matching: DateComponents(hour: 0), matchingPolicy: .nextTime) ?? .now.addingTimeInterval(3600)
-        let next = min((entries.last?.date ?? .now).addingTimeInterval(refreshInterval), midnight)
+        let next = WidgetLogic.nextRefreshDate(lastEntryDate: entries.last?.date, refreshInterval: refreshInterval)
         completion(Timeline(entries: entries, policy: .after(next)))
     }
 
     private func makeEntries(count: Int) -> [MemoryEntry] {
-        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
-        guard status == .authorized || status == .limited else {
-            return [MemoryEntry(date: .now, content: .noAccess)]
-        }
-
+        let library = PhotoLibraryService()
         // Photos kept in the app (or from the widget's own Keep button) don't come back
-        let kept = DecisionStore.keptIDsSnapshot()
-        let sections = PhotoLibraryService().loadOnThisDay()
-        let assets = interleave(sections.map { $0.assets.filter { !kept.contains($0.localIdentifier) } }, limit: count)
-        let hadPhotos = sections.contains { !$0.assets.isEmpty }
-        let caughtUp = [MemoryEntry(date: .now, content: .caughtUp(streak: DecisionStore.streakSnapshot(), hadPhotos: hadPhotos))]
-        guard !assets.isEmpty else { return caughtUp }
+        let plan = WidgetLogic.plan(hasAccess: WidgetLogic.hasAccess(PHPhotoLibrary.authorizationStatus(for: .readWrite)),
+                                    keptIDs: DecisionStore.keptIDsSnapshot(),
+                                    limit: count,
+                                    id: { $0.localIdentifier },
+                                    loadGroups: { library.loadOnThisDay().map(\.assets) })
+        let assets: [PHAsset]
+        switch plan {
+        case .noAccess:
+            return [MemoryEntry(date: .now, content: .noAccess)]
+        case .caughtUp(let hadPhotos):
+            return [caughtUpEntry(hadPhotos: hadPhotos)]
+        case .photos(let planned):
+            assets = planned
+        }
 
         let options = PHImageRequestOptions()
         options.isSynchronous = true
@@ -74,24 +76,11 @@ struct Provider: TimelineProvider {
             let entryDate = Date.now.addingTimeInterval(refreshInterval * Double(entries.count))
             entries.append(MemoryEntry(date: entryDate, content: .photo(image, date: created, id: asset.localIdentifier)))
         }
-        return entries.isEmpty ? caughtUp : entries
+        return entries.isEmpty ? [caughtUpEntry(hadPhotos: true)] : entries
     }
 
-    /// Takes one photo per year in turn so every year is represented.
-    private func interleave(_ groups: [[PHAsset]], limit: Int) -> [PHAsset] {
-        var result: [PHAsset] = []
-        var index = 0
-        while result.count < limit {
-            var added = false
-            for group in groups where index < group.count {
-                result.append(group[index])
-                added = true
-                if result.count == limit { break }
-            }
-            if !added { break }
-            index += 1
-        }
-        return result
+    private func caughtUpEntry(hadPhotos: Bool) -> MemoryEntry {
+        MemoryEntry(date: .now, content: .caughtUp(streak: DecisionStore.streakSnapshot(), hadPhotos: hadPhotos))
     }
 }
 
@@ -112,6 +101,7 @@ struct DeclutteringWidgetEntryView: View {
 
     var body: some View {
         content
+            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .containerBackground(for: .widget) { background }
     }
 
@@ -142,13 +132,17 @@ struct DeclutteringWidgetEntryView: View {
     private func pillCard(image: UIImage, date: Date, id: String) -> some View {
         let large = family == .systemLarge
         return framedPhoto(image, radius: large ? 30 : 22)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(photoDescription(for: date))
+            .accessibilityAddTraits(.isImage)
             .overlay(alignment: .bottom) {
                 HStack(spacing: 6) {
                     Text(yearsAgoText(for: date))
                         .font(themed(large ? 17 : 13, .heavy))
                         .foregroundStyle(wine)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.8)
+                        .minimumScaleFactor(0.7)
+                        .accessibilityHidden(true)
                     Spacer(minLength: 0)
                     keepButton(id: id, size: large ? 34 : 26)
                 }
@@ -165,20 +159,29 @@ struct DeclutteringWidgetEntryView: View {
         HStack(spacing: 12) {
             framedPhoto(image, radius: 18)
                 .aspectRatio(1, contentMode: .fit)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(photoDescription(for: date))
+                .accessibilityAddTraits(.isImage)
             VStack(alignment: .leading, spacing: 2) {
                 Text(yearsAgoText(for: date))
                     .font(themed(22, .heavy))
                     .foregroundStyle(wine)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
+                    .accessibilityHidden(true)
                 Text(date.formatted(.dateTime.day().month(.abbreviated).year()))
                     .font(themed(12, .semibold))
                     .foregroundStyle(wine.opacity(0.75))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .accessibilityHidden(true)
                 Spacer(minLength: 0)
                 Button(intent: KeepPhotoIntent(assetID: id)) {
                     HStack(spacing: 6) {
                         Image(systemName: "heart.fill")
+                            .accessibilityHidden(true)
                         Text("Keep")
+                            .lineLimit(1)
                     }
                     .font(themed(13, .heavy))
                     .foregroundStyle(cream)
@@ -209,16 +212,18 @@ struct DeclutteringWidgetEntryView: View {
                 .foregroundStyle(cream)
                 .frame(width: size, height: size)
                 .background(Circle().fill(wine))
+                .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Keep this photo")
+        .accessibilityAddTraits(.isButton)
     }
 
     // MARK: Messages
 
     private func caughtUp(streak: Int, hadPhotos: Bool) -> some View {
         let title = hadPhotos ? "All sorted for today." : "No photos from this day."
-        let streakLine = streak > 0 ? "\(streak)-day streak" : "Sort a photo to start a streak"
+        let streakLine = WidgetLogic.streakLine(streak)
         return VStack(spacing: 6) {
             BinnyMark()
                 .frame(maxHeight: family == .systemSmall ? 52 : 80)
@@ -226,14 +231,19 @@ struct DeclutteringWidgetEntryView: View {
                 .font(themed(family == .systemSmall ? 12 : 14, .heavy))
                 .foregroundStyle(onBackground)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
             Label(streakLine, systemImage: "flame.fill")
                 .font(themed(family == .systemSmall ? 10 : 12, .semibold))
-                .foregroundStyle(onBackground.opacity(0.8))
-                .lineLimit(1)
+                .foregroundStyle(onBackground)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
                 .minimumScaleFactor(0.8)
         }
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(title). \(streakLine)")
     }
 
     private func message(_ text: String, icon: String) -> some View {
@@ -243,6 +253,7 @@ struct DeclutteringWidgetEntryView: View {
                 .foregroundStyle(wine)
                 .frame(width: 40, height: 40)
                 .background(Circle().fill(cream))
+                .accessibilityHidden(true)
             Text(text)
                 .font(themed(12, .semibold))
                 .foregroundStyle(onBackground)
@@ -252,13 +263,12 @@ struct DeclutteringWidgetEntryView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    private func photoDescription(for date: Date) -> String {
+        "Photo from \(yearsAgoText(for: date).lowercased()), \(date.formatted(.dateTime.day().month(.wide).year()))"
+    }
+
     private func yearsAgoText(for date: Date) -> String {
-        let years = Calendar.current.component(.year, from: .now) - Calendar.current.component(.year, from: date)
-        switch years {
-        case 0: return "Today"
-        case 1: return "1 year ago"
-        default: return "\(years) years ago"
-        }
+        WidgetLogic.yearsAgoText(for: date)
     }
 }
 

@@ -1,3 +1,4 @@
+import AVFoundation
 import UIKit
 
 enum SortDecision {
@@ -19,7 +20,7 @@ struct SortSummary {
 
 // MARK: - View
 
-protocol SwipeSortViewProtocol: AnyObject {
+protocol SwipeSortViewProtocol: BinnedNoticeShowing {
     func show(front: ViewerItem, back: ViewerItem?, position: String, canUndo: Bool, transition: SortTransition)
     func show(summary: SortSummary)
     func showCelebration(text: String)
@@ -38,6 +39,7 @@ protocol SwipeSortPresenterProtocol: AnyObject {
     func didTapFinish()
     func loadImage(id: String, targetSize: CGSize, completion: @escaping (UIImage?) -> Void) -> ThumbnailToken?
     func cancelImage(_ token: ThumbnailToken)
+    func loadVideo(id: String, completion: @escaping (AVPlayerItem?) -> Void) -> ThumbnailToken?
 }
 
 // MARK: - Router

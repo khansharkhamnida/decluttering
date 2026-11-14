@@ -1,3 +1,4 @@
+import AVFoundation
 import UIKit
 
 /// Cards go by one at a time: keep is saved right away, bin is collected and confirmed once at the end.
@@ -8,6 +9,7 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
     private let router: SwipeSortRouterProtocol
     private let decisions: DecisionRecording
     private let breaks: BreakPolicy
+    private let keepersAlbum: KeepersAlbumManaging
     private let onFinished: () -> Void
 
     private let items: [ViewerItem]
@@ -18,8 +20,10 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
     private var showingSummary = false
 
     init(view: SwipeSortViewProtocol, interactor: PhotoViewerInteractorProtocol, router: SwipeSortRouterProtocol,
-         decisions: DecisionRecording, breaks: BreakPolicy, items: [ViewerItem], onFinished: @escaping () -> Void) {
+         decisions: DecisionRecording, breaks: BreakPolicy, items: [ViewerItem], onFinished: @escaping () -> Void,
+         keepersAlbum: KeepersAlbumManaging = NoOpKeepersAlbum()) {
         self.view = view
+        self.keepersAlbum = keepersAlbum
         self.interactor = interactor
         self.router = router
         self.decisions = decisions
@@ -36,6 +40,7 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
         switch decision {
         case .keep:
             decisions.recordKept(ids: [item.id])
+            keepersAlbum.didKeep(ids: [item.id])
             keptCount += 1
             BoothHaptics.shared.sparkle()
         case .bin:
@@ -61,6 +66,7 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
         switch last.decision {
         case .keep:
             decisions.removeKept(ids: [last.item.id])
+            keepersAlbum.didUndoKeep(ids: [last.item.id])
             keptCount -= 1
         case .bin:
             pendingBin.removeAll { $0 == last.item.id }
@@ -101,13 +107,20 @@ final class SwipeSortPresenter: SwipeSortPresenterProtocol {
 
     func cancelImage(_ token: ThumbnailToken) { interactor.cancelImage(token) }
 
+    /// Only the front card asks for this, and only when it is a video. Cancel with `cancelImage`.
+    func loadVideo(id: String, completion: @escaping (AVPlayerItem?) -> Void) -> ThumbnailToken? {
+        interactor.loadPlayerItem(id: id, completion: completion)
+    }
+
     private func performBin(_ ids: [String]) {
+        guard !ids.isEmpty else { return }
         Task {
             do {
                 guard try await interactor.delete(ids: ids) == .deleted else { return }
                 decisions.recordBinned(ids: ids)
                 pendingBin.removeAll()
                 view?.showCelebration(text: BoothVoice.celebration(count: ids.count))
+                view?.showBinned(count: ids.count)
                 onFinished()
                 try? await Task.sleep(for: .seconds(1.4))
                 router.close()

@@ -117,13 +117,16 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
     /// A seek bar so a long video can be skipped through instead of watched.
     private func setUpScrubber() {
         scrubBar.backgroundColor = UIColor.black.withAlphaComponent(0.55)
-        scrubBar.layer.cornerRadius = 18
+        scrubBar.layer.cornerRadius = 22
         scrubBar.isHidden = true
         scrubBar.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(scrubBar)
 
         for label in [elapsedLabel, durationLabel] {
-            label.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .semibold)
+            label.font = UIFontMetrics(forTextStyle: .caption1).scaledFont(
+                for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .semibold), maximumPointSize: 22)
+            label.adjustsFontForContentSizeCategory = true
+            label.isAccessibilityElement = false
             label.textColor = BoothTheme.onViewer
             label.text = Self.timeText(0)
             label.setContentHuggingPriority(.required, for: .horizontal)
@@ -134,6 +137,10 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
         scrubber.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.3)
         scrubber.thumbTintColor = BoothTheme.paper
         scrubber.accessibilityLabel = "Video position"
+        scrubber.accessibilityValue = Self.positionText(0, of: 0)
+        scrubBar.isAccessibilityElement = false
+        scrubBar.shouldGroupAccessibilityChildren = true
+        scrubBar.accessibilityElements = [scrubber]
         scrubber.addAction(UIAction { [weak self] _ in self?.scrubBegan() }, for: .touchDown)
         scrubber.addAction(UIAction { [weak self] _ in self?.scrubChanged() }, for: .valueChanged)
         scrubber.addAction(UIAction { [weak self] _ in self?.scrubEnded() }, for: [.touchUpInside, .touchUpOutside, .touchCancel])
@@ -147,8 +154,8 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             scrubBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             scrubBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            scrubBar.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -104),
-            scrubBar.heightAnchor.constraint(equalToConstant: 36),
+            scrubBar.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            scrubBar.heightAnchor.constraint(equalToConstant: 44),
             row.leadingAnchor.constraint(equalTo: scrubBar.leadingAnchor, constant: 14),
             row.trailingAnchor.constraint(equalTo: scrubBar.trailingAnchor, constant: -14),
             row.centerYAnchor.constraint(equalTo: scrubBar.centerYAnchor)
@@ -160,6 +167,10 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
         return String(format: "%d:%02d", total / 60, total % 60)
     }
 
+    private static func positionText(_ elapsed: Double, of total: Double) -> String {
+        "\(timeText(elapsed)) of \(timeText(total))"
+    }
+
     private func updateScrubber(at time: CMTime) {
         guard !isScrubbing, let item = player?.currentItem else { return }
         let total = item.duration.seconds
@@ -168,6 +179,7 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
         scrubber.value = Float(time.seconds)
         elapsedLabel.text = Self.timeText(time.seconds)
         durationLabel.text = Self.timeText(total)
+        scrubber.accessibilityValue = Self.positionText(time.seconds, of: total)
     }
 
     private func scrubBegan() {
@@ -179,6 +191,7 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
 
     private func scrubChanged() {
         elapsedLabel.text = Self.timeText(Double(scrubber.value))
+        scrubber.accessibilityValue = Self.positionText(Double(scrubber.value), of: Double(scrubber.maximumValue))
         player?.seek(to: CMTime(seconds: Double(scrubber.value), preferredTimescale: 600))
     }
 
@@ -254,11 +267,13 @@ final class ViewerPhotoCell: UICollectionViewCell, UIScrollViewDelegate {
             self?.playButton.isHidden = false
             self?.scrubber.value = 0
             self?.elapsedLabel.text = Self.timeText(0)
+            if let self { self.scrubber.accessibilityValue = Self.positionText(0, of: Double(self.scrubber.maximumValue)) }
         }
         scrubber.value = 0
         scrubber.maximumValue = 1
         elapsedLabel.text = Self.timeText(0)
         durationLabel.text = Self.timeText(0)
+        scrubber.accessibilityValue = Self.positionText(0, of: 0)
         scrubBar.isHidden = false
         timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.25, preferredTimescale: 600), queue: .main) { [weak self] time in
             self?.updateScrubber(at: time)

@@ -11,7 +11,8 @@ final class SwipeSortRouter: SwipeSortRouterProtocol {
         let router = SwipeSortRouter()
         let presenter = SwipeSortPresenter(view: view, interactor: interactor, router: router,
                                            decisions: DecisionStore.shared, breaks: BreakPolicy(),
-                                           items: items, onFinished: onFinished)
+                                           items: items, onFinished: onFinished,
+                                           keepersAlbum: KeepersAlbumManager.shared)
         view.presenter = presenter
         router.viewController = view
         router.imageLoader = { id, size, done in interactor.loadImage(id: id, targetSize: size, completion: done) }

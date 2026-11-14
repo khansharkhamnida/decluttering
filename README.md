@@ -2,7 +2,9 @@
 
 Snap. Sort. Bin. An iOS app that shows the photos you took **on this day** in past years, so you can keep the good ones and bin the rest, with a little help from Binny the bin.
 
-**Website:** https://khansharkhamnida.github.io/decluttering/
+**Website:** https://khansharkhamnida.github.io/decluttering/  
+**Privacy:** https://khansharkhamnida.github.io/decluttering/privacy.html  
+**Support:** https://khansharkhamnida.github.io/decluttering/support.html
 
 ## Features
 
@@ -16,7 +18,7 @@ Photos stay on your device. There are no accounts, servers or analytics.
 
 ## Build
 
-Requires Xcode 26 and iOS 26.
+Requires Xcode 26 and iOS 17 or later.
 
 ```sh
 git clone https://github.com/khansharkhamnida/decluttering.git

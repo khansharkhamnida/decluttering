@@ -11,6 +11,7 @@ final class MockSortView: SwipeSortViewProtocol {
     var transitions: [SortTransition] = []
     var summaries: [SortSummary] = []
     var celebrations: [String] = []
+    var binnedCounts: [Int] = []
     var errors: [String] = []
 
     func show(front: ViewerItem, back: ViewerItem?, position: String, canUndo: Bool, transition: SortTransition) {
@@ -18,6 +19,7 @@ final class MockSortView: SwipeSortViewProtocol {
     }
     func show(summary: SortSummary) { summaries.append(summary) }
     func showCelebration(text: String) { celebrations.append(text) }
+    func showBinned(count: Int) { binnedCounts.append(count) }
     func showError(title: String, message: String) { errors.append(title) }
 }
 

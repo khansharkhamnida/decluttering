@@ -10,9 +10,9 @@ nonisolated enum BreakLevel: Int {
 /// so Binny steps in at two points each day, once each.
 nonisolated struct BreakPolicy {
 
-    // Low on purpose, to preview the reminders. The everyday values are 40 and 100.
-    static let gentleAt = 5
-    static let restAt = 10
+    // Photos sorted in a day before Binny suggests a short break, and then a proper rest.
+    static let gentleAt = 40
+    static let restAt = 100
 
     private let defaults: UserDefaults
     private let calendar: Calendar

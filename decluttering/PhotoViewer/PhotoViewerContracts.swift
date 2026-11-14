@@ -21,7 +21,7 @@ protocol PhotoViewerInteractorProtocol: AnyObject {
 
 // MARK: - View
 
-protocol PhotoViewerViewProtocol: AnyObject {
+protocol PhotoViewerViewProtocol: BinnedNoticeShowing {
     func show(items: [ViewerItem], index: Int)
     func showHeader(title: String, subtitle: String, counter: String)
     func showError(title: String, message: String)

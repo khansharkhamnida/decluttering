@@ -1,4 +1,22 @@
+import AVFoundation
 import UIKit
+
+// MARK: - Video layer
+
+/// Backed by an AVPlayerLayer. It never takes touches, so dragging the card is unaffected.
+final class SortVideoLayerView: UIView {
+    override class var layerClass: AnyClass { AVPlayerLayer.self }
+    var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isUserInteractionEnabled = false
+        isAccessibilityElement = false
+        playerLayer.videoGravity = .resizeAspectFill
+    }
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
 
 // MARK: - One card
 
@@ -10,9 +28,30 @@ final class SortCardView: UIView {
     private let keepStamp = UILabel()
     private let binStamp = UILabel()
     private let kindBadge = UILabel()
+    private let videoView = SortVideoLayerView()
+    private let soundBadge = UIImageView()
+    private let playHint = UIImageView()
 
     private(set) var representedID: String?
     private var token: ThumbnailToken?
+
+    // Video playback. Only the front card ever holds a player (see `setPlaying`).
+    var loadVideo: ((String, @escaping (AVPlayerItem?) -> Void) -> ThumbnailToken?)?
+    var cancelVideo: ((ThumbnailToken) -> Void)?
+    private var kind: MediaKind = .photo
+    private var player: AVPlayer?
+    private var videoToken: ThumbnailToken?
+    private var videoGeneration = 0
+    private var isLoadingVideo = false
+    private var endObserver: NSObjectProtocol?
+    private var readyObservation: NSKeyValueObservation?
+    private var wantsPlayback = false
+    private var userStartedPlay = false
+    private var isMuted = true
+
+    private var autoplayAllowed: Bool {
+        !UIAccessibility.isReduceMotionEnabled && !ProcessInfo.processInfo.isLowPowerModeEnabled
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,16 +98,61 @@ final class SortCardView: UIView {
         kindBadge.isHidden = true
         kindBadge.translatesAutoresizingMaskIntoConstraints = false
 
+        videoView.alpha = 0
+        videoView.layer.cornerRadius = 14
+        videoView.clipsToBounds = true
+        videoView.translatesAutoresizingMaskIntoConstraints = false
+
+        let symbols = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
+        soundBadge.contentMode = .center
+        soundBadge.preferredSymbolConfiguration = symbols
+        soundBadge.tintColor = BoothTheme.onViewer
+        soundBadge.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        soundBadge.layer.cornerRadius = 10
+        soundBadge.clipsToBounds = true
+        soundBadge.isHidden = true
+        soundBadge.translatesAutoresizingMaskIntoConstraints = false
+
+        playHint.contentMode = .center
+        playHint.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 56, weight: .regular)
+        playHint.image = UIImage(systemName: "play.circle.fill")
+        playHint.tintColor = BoothTheme.onViewer
+        playHint.layer.shadowColor = UIColor.black.cgColor
+        playHint.layer.shadowOpacity = 0.5
+        playHint.layer.shadowRadius = 6
+        playHint.layer.shadowOffset = .zero
+        playHint.isHidden = true
+        playHint.translatesAutoresizingMaskIntoConstraints = false
+
+        // Taps toggle sound (or start the video when autoplay is off). Dragging is a separate pan on the
+        // card area, and a tap never moves far enough to start it.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tap.cancelsTouchesInView = false
+        addGestureRecognizer(tap)
+
         let texts = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         texts.axis = .vertical
         [imageView, texts].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(imageView)
+        addSubview(videoView)
         addSubview(texts)
         addSubview(keepStamp)
         addSubview(binStamp)
         addSubview(kindBadge)
+        addSubview(soundBadge)
+        addSubview(playHint)
 
         NSLayoutConstraint.activate([
+            videoView.topAnchor.constraint(equalTo: imageView.topAnchor),
+            videoView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            videoView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            videoView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            soundBadge.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -10),
+            soundBadge.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10),
+            soundBadge.widthAnchor.constraint(equalToConstant: 32),
+            soundBadge.heightAnchor.constraint(equalToConstant: 20),
+            playHint.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            playHint.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
@@ -96,6 +180,10 @@ final class SortCardView: UIView {
     func configure(_ item: ViewerItem, position: String?, loader: (String, CGSize, @escaping (UIImage?) -> Void) -> ThumbnailToken?,
                    cancel: (ThumbnailToken) -> Void) {
         if let token { cancel(token) }
+        releaseVideo()
+        kind = item.kind
+        userStartedPlay = false
+        isMuted = true
         representedID = item.id
         imageView.image = nil
         titleLabel.text = item.title
@@ -115,6 +203,142 @@ final class SortCardView: UIView {
             guard let self, self.representedID == id, let image else { return }
             self.imageView.image = image
         }
+        refreshVideoAccessibility()
+    }
+
+    // MARK: Video
+
+    /// The screen says whether this card should be playing right now (front card, nothing covering it,
+    /// app active). Reduce Motion and Low Power Mode turn autoplay off, leaving a tap-to-play still.
+    func setPlaying(_ active: Bool) {
+        guard kind == .video else { return }
+        wantsPlayback = active
+        guard active else {
+            pausePlayback()
+            return
+        }
+        guard autoplayAllowed || userStartedPlay else {
+            player?.pause()
+            cancelPendingLoad()
+            setPlayHint(visible: true)
+            return
+        }
+        setPlayHint(visible: false)
+        if let player {
+            player.play()
+        } else {
+            requestVideo()
+        }
+    }
+
+    /// Frees the player and cancels a load that has not finished.
+    func releaseVideo() {
+        wantsPlayback = false
+        cancelPendingLoad()
+        player?.pause()
+        videoView.playerLayer.player = nil
+        player = nil
+        if let endObserver { NotificationCenter.default.removeObserver(endObserver) }
+        endObserver = nil
+        readyObservation = nil
+        videoView.alpha = 0
+        soundBadge.isHidden = true
+        playHint.isHidden = true
+        accessibilityCustomActions = nil
+    }
+
+    private func pausePlayback() {
+        player?.pause()
+        cancelPendingLoad()
+        setPlayHint(visible: false)
+    }
+
+    private func cancelPendingLoad() {
+        videoGeneration += 1
+        isLoadingVideo = false
+        if let videoToken { cancelVideo?(videoToken) }
+        videoToken = nil
+    }
+
+    private func requestVideo() {
+        guard !isLoadingVideo, let id = representedID, let loadVideo else { return }
+        isLoadingVideo = true
+        videoGeneration += 1
+        let generation = videoGeneration
+        let requested = loadVideo(id) { [weak self] item in
+            guard let self, self.videoGeneration == generation, self.representedID == id else { return }
+            self.isLoadingVideo = false
+            self.videoToken = nil
+            guard self.wantsPlayback, let item else { return }
+            self.startPlayer(with: item)
+        }
+        // A synchronous completion has already finished the request
+        if isLoadingVideo, videoGeneration == generation { videoToken = requested }
+    }
+
+    private func startPlayer(with item: AVPlayerItem) {
+        // Ambient mixes with the user's music and follows the silent switch, so a muted loop never interrupts them
+        try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .moviePlayback)
+        let player = AVPlayer(playerItem: item)
+        player.isMuted = isMuted
+        player.actionAtItemEnd = .none
+        self.player = player
+        videoView.playerLayer.player = player
+        endObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main) { [weak self] _ in
+            guard let self, let player = self.player else { return }
+            player.seek(to: .zero)
+            if self.wantsPlayback { player.play() }
+        }
+        // The still stays visible until the first video frame is ready, so there is no black flash
+        readyObservation = videoView.playerLayer.observe(\.isReadyForDisplay, options: [.initial, .new]) { [weak self] layer, _ in
+            guard layer.isReadyForDisplay else { return }
+            DispatchQueue.main.async {
+                guard let self, self.player != nil else { return }
+                UIView.animate(withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.2) { self.videoView.alpha = 1 }
+            }
+        }
+        soundBadge.isHidden = false
+        updateSoundBadge()
+        player.play()
+    }
+
+    private func setPlayHint(visible: Bool) {
+        playHint.isHidden = !visible
+        refreshVideoAccessibility()
+    }
+
+    private func updateSoundBadge() {
+        soundBadge.image = UIImage(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+        refreshVideoAccessibility()
+    }
+
+    @objc private func tapped() {
+        guard kind == .video, wantsPlayback else { return }
+        if !autoplayAllowed && !userStartedPlay {
+            userStartedPlay = true
+            setPlaying(true)
+        } else if let player {
+            isMuted.toggle()
+            player.isMuted = isMuted
+            updateSoundBadge()
+        }
+    }
+
+    private func refreshVideoAccessibility() {
+        guard kind == .video else { accessibilityCustomActions = nil; return }
+        let name: String
+        if !playHint.isHidden {
+            name = "Play video"
+        } else if player != nil {
+            name = isMuted ? "Turn sound on" : "Turn sound off"
+        } else {
+            accessibilityCustomActions = nil
+            return
+        }
+        accessibilityCustomActions = [UIAccessibilityCustomAction(name: name) { [weak self] _ in
+            self?.tapped()
+            return true
+        }]
     }
 
     /// -1 (full bin) to 1 (full keep).
@@ -154,6 +378,9 @@ final class SwipeSortViewController: UIViewController {
     }
 
     private var isAnimating = false
+    private var isOnScreen = false
+    private var appIsActive = true
+    private var coverWatcher: Timer?
 
     // WHIMSY STEP 1 (UIKit Dynamics): the "physics world". It lives inside `cardArea`, so card positions
     // are measured in that view's coordinates. Behaviours (attachment, launch) are added to it and it
@@ -174,7 +401,42 @@ final class SwipeSortViewController: UIViewController {
         overrideUserInterfaceStyle = BoothTheme.interfaceStyle
         view.backgroundColor = BoothTheme.background
         setUpLayout()
+        observePlaybackConditions()
         presenter.viewDidLoad()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isOnScreen = true
+        updatePlayback()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isOnScreen = false
+        updatePlayback()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isBeingDismissed {
+            frontCard.releaseVideo()
+            backCard.releaseVideo()
+        }
+    }
+
+    // Alerts, the break reminder and Last Look are sheets that cover the card without any appearance callback
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+        updatePlayback()
+        guard coverWatcher == nil else { return }
+        coverWatcher = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] timer in
+            guard let self else { return timer.invalidate() }
+            guard self.presentedViewController == nil else { return }
+            timer.invalidate()
+            self.coverWatcher = nil
+            self.updatePlayback()
+        }
     }
 
     // MARK: Setup
@@ -398,6 +660,7 @@ final class SwipeSortViewController: UIViewController {
     private func fling(_ decision: SortDecision, velocity: CGPoint) {
         guard !isAnimating, summaryView.isHidden else { return }
         isAnimating = true
+        updatePlayback()
         let direction: CGFloat = decision == .keep ? 1 : -1
         frontCard.setStamp(direction)
         UIAccessibility.post(notification: .announcement, argument: decision == .keep ? "Kept" : "Binned")
@@ -477,6 +740,27 @@ final class SwipeSortViewController: UIViewController {
         }
     }
 
+    // MARK: Video playback
+
+    private func observePlaybackConditions() {
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(appResigned), name: UIApplication.willResignActiveNotification, object: nil)
+        center.addObserver(self, selector: #selector(appBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        center.addObserver(self, selector: #selector(playbackConditionsChanged), name: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil)
+        center.addObserver(self, selector: #selector(playbackConditionsChanged), name: .NSProcessInfoPowerStateDidChange, object: nil)
+    }
+
+    @objc private func appResigned() { appIsActive = false; updatePlayback() }
+    @objc private func appBecameActive() { appIsActive = true; updatePlayback() }
+    @objc private func playbackConditionsChanged() { updatePlayback() }
+
+    /// Only the front card plays, and only while it is visible, still, and not covered.
+    private func updatePlayback() {
+        let canPlay = isOnScreen && appIsActive && !isAnimating && summaryView.isHidden && presentedViewController == nil
+        backCard.releaseVideo()
+        frontCard.setPlaying(canPlay)
+    }
+
     private func decide(_ decision: SortDecision) {
         fling(decision, velocity: .zero)
     }
@@ -487,6 +771,8 @@ final class SwipeSortViewController: UIViewController {
         card.configure(item, position: position,
                        loader: { [presenter] id, size, done in presenter!.loadImage(id: id, targetSize: size, completion: done) },
                        cancel: { [presenter] token in presenter?.cancelImage(token) })
+        card.loadVideo = { [presenter] id, done in presenter?.loadVideo(id: id, completion: done) }
+        card.cancelVideo = { [presenter] token in presenter?.cancelImage(token) }
     }
 
     private func offscreen(_ decision: SortDecision) -> CGAffineTransform {
@@ -548,6 +834,7 @@ extension SwipeSortViewController: SwipeSortViewProtocol {
                 self.backCard.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
             }
         }
+        updatePlayback()
     }
 
     func show(summary: SortSummary) {
@@ -557,6 +844,7 @@ extension SwipeSortViewController: SwipeSortViewProtocol {
         undoButton.alpha = 1
         positionLabel.text = nil
         summaryView.isHidden = false
+        updatePlayback()
 
         summaryStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         summaryTitle.text = summary.remaining == 0 ? "All sorted!" : "Taking a break?"

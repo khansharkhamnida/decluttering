@@ -174,8 +174,10 @@ final class OnThisDayViewController: UIViewController {
         for appearance in [scrolled, edge] {
             appearance.titleTextAttributes = [.foregroundColor: BoothTheme.onBackground, .font: BoothTheme.font(17, .heavy)]
             appearance.largeTitleTextAttributes = [.foregroundColor: BoothTheme.onBackground, .font: BoothTheme.font(34, .heavy)]
-            appearance.subtitleTextAttributes = [.foregroundColor: BoothTheme.accent, .font: BoothTheme.font(13, .semibold)]
-            appearance.largeSubtitleTextAttributes = [.foregroundColor: BoothTheme.accent, .font: BoothTheme.font(15, .semibold)]
+            if #available(iOS 26.0, *) {
+                appearance.subtitleTextAttributes = [.foregroundColor: BoothTheme.accent, .font: BoothTheme.font(13, .semibold)]
+                appearance.largeSubtitleTextAttributes = [.foregroundColor: BoothTheme.accent, .font: BoothTheme.font(15, .semibold)]
+            }
         }
         navigationItem.standardAppearance = scrolled
         navigationItem.scrollEdgeAppearance = edge
@@ -403,7 +405,11 @@ final class OnThisDayViewController: UIViewController {
 extension OnThisDayViewController: OnThisDayViewProtocol {
 
     func show(dateText: String) {
-        navigationItem.subtitle = dateText
+        if #available(iOS 26.0, *) {
+            navigationItem.subtitle = dateText
+        } else {
+            navigationItem.prompt = dateText
+        }
     }
 
     func show(quote: String) {

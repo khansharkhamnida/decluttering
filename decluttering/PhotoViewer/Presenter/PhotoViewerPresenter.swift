@@ -9,12 +9,15 @@ final class PhotoViewerPresenter: PhotoViewerPresenterProtocol {
     private let router: PhotoViewerRouterProtocol
     private let decisions: DecisionRecording
     private let onChanged: () -> Void
+    private let keepersAlbum: KeepersAlbumManaging
 
     private var items: [ViewerItem]
     private var index: Int
 
     init(view: PhotoViewerViewProtocol, interactor: PhotoViewerInteractorProtocol, router: PhotoViewerRouterProtocol,
-         decisions: DecisionRecording, items: [ViewerItem], startIndex: Int, onChanged: @escaping () -> Void) {
+         decisions: DecisionRecording, items: [ViewerItem], startIndex: Int, onChanged: @escaping () -> Void,
+         keepersAlbum: KeepersAlbumManaging = NoOpKeepersAlbum()) {
+        self.keepersAlbum = keepersAlbum
         self.view = view
         self.interactor = interactor
         self.router = router
@@ -47,6 +50,7 @@ final class PhotoViewerPresenter: PhotoViewerPresenterProtocol {
         guard items.indices.contains(index) else { return }
         let id = items[index].id
         decisions.recordKept(ids: [id])
+        keepersAlbum.didKeep(ids: [id])
         BoothHaptics.shared.sparkle()
         view?.showCelebration(text: BoothVoice.keepLine())
         removeItem(id)
@@ -59,6 +63,7 @@ final class PhotoViewerPresenter: PhotoViewerPresenterProtocol {
                 guard try await interactor.delete(ids: [id]) == .deleted else { return }
                 decisions.recordBinned(ids: [id])
                 view?.showCelebration(text: BoothVoice.celebration(count: 1))
+                view?.showBinned(count: 1)
                 removeItem(id)
             } catch {
                 view?.showError(title: "Couldn't bin that one", message: error.localizedDescription)

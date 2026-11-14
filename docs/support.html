@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support – Decluttering</title>
+<meta name="description" content="Help for the Decluttering iOS app: Photos access, kept and binned photos, streaks, themes, the widget, and how to report a bug.">
+<meta name="theme-color" content="#1b1b20">
+<link rel="icon" href="icon.png">
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--page:#1b1b20;--ink:#fff;--mute:#ffffffa6;--card:#26262d;--brand:#B02339}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--page);color:var(--ink);font-family:-apple-system,"SF Pro Rounded",system-ui,sans-serif;line-height:1.5;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+nav b{font-size:18px;display:flex;align-items:center;gap:10px}nav b img{width:30px;height:30px;border-radius:8px}
+nav b a{text-decoration:none;display:flex;align-items:center;gap:10px}
+nav a.btn{font-size:14px}
+.btn{display:inline-block;background:#fff;color:#1b1b20;font-weight:800;text-decoration:none;padding:12px 22px;border-radius:999px;font-size:16px;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#ffffff1c;color:#fff}
+main{max-width:760px;margin:0 auto;padding:36px 0 48px}
+h1{font-size:clamp(32px,6vw,46px);font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.updated{color:var(--mute);font-size:15px;margin-bottom:30px}
+h2{font-size:22px;font-weight:900;letter-spacing:-.3px;margin:34px 0 8px}
+p,li{color:var(--mute);font-size:17px}
+p{margin:0 0 12px}
+ul{padding-left:22px;margin:0 0 12px}li{margin:5px 0}
+p a,li a,summary a{color:#fff;text-underline-offset:3px}
+b,strong{color:#fff}
+.note{background:var(--card);border-radius:16px;padding:18px 20px;margin:0 0 8px}
+.note p{margin:0;color:#fff}
+details{background:var(--card);border-radius:16px;padding:16px 20px;margin:0 0 12px}
+summary{font-weight:800;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:24px;line-height:1;color:var(--mute);flex:none}
+details[open] summary:after{content:"\2212"}
+details p{margin:10px 0 0}
+.cta{text-align:center;margin-top:34px}
+footer{padding:36px 0 60px;text-align:center;color:var(--mute);font-size:14px}
+footer a{margin:0 10px}
+</style>
+</head>
+<body>
+<div class="wrap"><nav><b><a href="index.html"><img src="icon.png" alt="">Decluttering</a></b><a class="btn ghost" href="index.html">Home</a></nav></div>
+<div class="wrap"><main>
+<h1>Support</h1>
+<p class="updated">Answers to common questions about Decluttering.</p>
+<details><summary>Why does the app need access to my Photos?</summary><p>Decluttering shows the photos you took on this day in past years, and that needs permission to read your library. It all happens on your device and nothing is uploaded. See the <a href="privacy.html">privacy policy</a>. If you chose limited access, you can add more photos from within the app, or change the setting in iOS Settings, under Decluttering, then Photos.</p></details>
+<details><summary>Where do kept photos go?</summary><p>Nowhere. Kept photos stay in your Photos library, untouched. The app only remembers their IDs, so it doesn't show them to you again.</p></details>
+<details><summary>How do I get binned photos back?</summary><p>Open the Photos app, go to Albums, then Recently Deleted, and recover them. Binned photos stay there for about 30 days before iOS deletes them for good.</p></details>
+<details><summary>How do I bring my kept photos back?</summary><p>Open the stats screen and tap <b>Bring my kept photos back</b>. The app forgets which photos you kept, so they show up again for sorting. Nothing in your library changes.</p></details>
+<details><summary>How does the streak work?</summary><p>A day counts toward your streak if you keep or bin at least one photo that day. Your streak carries on as long as you sort something every day. If you haven't sorted anything yet today, yesterday's streak is still safe.</p></details>
+<details><summary>How do I change the theme or the app icon?</summary><p>Open the theme picker in the app and choose one of the 14 themes. The theme restyles the whole app and the widget, and it switches the app icon to match.</p></details>
+<details><summary>How do I add the widget, and what if it isn't updating?</summary><p>Touch and hold an empty spot on your Home Screen, tap the + button, search for Decluttering and pick a size. The widget refreshes after you sort photos in the app, but iOS decides exactly when widgets update. If it looks out of date, open the app once, or remove the widget and add it again. It also needs Photos access to show pictures.</p></details>
+<details><summary>How do I turn the daily reminder on or off?</summary><p>Use the daily reminder switch in the stats screen. If iOS asked for notification permission and you said no, enable it in iOS Settings, under Decluttering, then Notifications.</p></details>
+
+<h2>Report a bug or ask for help</h2>
+<p>Can't find your answer? Open an issue on GitHub and tell us what happened, which iPhone and iOS version you use, and what you expected. Please don't include personal photos or information.</p>
+<div class="cta"><a class="btn" href="https://github.com/khansharkhamnida/decluttering/issues">Open a GitHub issue</a></div>
+</main></div>
+<footer><div class="wrap">Made with love and a smiling bin.<br><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a href="https://github.com/khansharkhamnida/decluttering">GitHub</a><a href="https://github.com/khansharkhamnida/decluttering/issues">Report a bug</a></div></footer>
+</body>
+</html>

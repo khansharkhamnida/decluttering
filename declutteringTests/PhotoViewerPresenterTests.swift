@@ -8,12 +8,14 @@ final class MockViewerView: PhotoViewerViewProtocol {
     var shownIndexes: [Int] = []
     var headers: [(title: String, counter: String)] = []
     var celebrations: [String] = []
+    var binnedCounts: [Int] = []
     var errors: [String] = []
 
     func show(items: [ViewerItem], index: Int) { shownItems.append(items.map(\.id)); shownIndexes.append(index) }
     func showHeader(title: String, subtitle: String, counter: String) { headers.append((title, counter)) }
     func showError(title: String, message: String) { errors.append(title) }
     func showCelebration(text: String) { celebrations.append(text) }
+    func showBinned(count: Int) { binnedCounts.append(count) }
 }
 
 @MainActor

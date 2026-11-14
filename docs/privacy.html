@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy – Decluttering</title>
+<meta name="description" content="Decluttering privacy policy: no accounts, no servers, no analytics, no tracking. Your photos and decisions never leave your device.">
+<meta name="theme-color" content="#1b1b20">
+<link rel="icon" href="icon.png">
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--page:#1b1b20;--ink:#fff;--mute:#ffffffa6;--card:#26262d;--brand:#B02339}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--page);color:var(--ink);font-family:-apple-system,"SF Pro Rounded",system-ui,sans-serif;line-height:1.5;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+nav b{font-size:18px;display:flex;align-items:center;gap:10px}nav b img{width:30px;height:30px;border-radius:8px}
+nav b a{text-decoration:none;display:flex;align-items:center;gap:10px}
+nav a.btn{font-size:14px}
+.btn{display:inline-block;background:#fff;color:#1b1b20;font-weight:800;text-decoration:none;padding:12px 22px;border-radius:999px;font-size:16px;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#ffffff1c;color:#fff}
+main{max-width:760px;margin:0 auto;padding:36px 0 48px}
+h1{font-size:clamp(32px,6vw,46px);font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.updated{color:var(--mute);font-size:15px;margin-bottom:30px}
+h2{font-size:22px;font-weight:900;letter-spacing:-.3px;margin:34px 0 8px}
+p,li{color:var(--mute);font-size:17px}
+p{margin:0 0 12px}
+ul{padding-left:22px;margin:0 0 12px}li{margin:5px 0}
+p a,li a,summary a{color:#fff;text-underline-offset:3px}
+b,strong{color:#fff}
+.note{background:var(--card);border-radius:16px;padding:18px 20px;margin:0 0 8px}
+.note p{margin:0;color:#fff}
+details{background:var(--card);border-radius:16px;padding:16px 20px;margin:0 0 12px}
+summary{font-weight:800;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:24px;line-height:1;color:var(--mute);flex:none}
+details[open] summary:after{content:"\2212"}
+details p{margin:10px 0 0}
+.cta{text-align:center;margin-top:34px}
+footer{padding:36px 0 60px;text-align:center;color:var(--mute);font-size:14px}
+footer a{margin:0 10px}
+</style>
+</head>
+<body>
+<div class="wrap"><nav><b><a href="index.html"><img src="icon.png" alt="">Decluttering</a></b><a class="btn ghost" href="index.html">Home</a></nav></div>
+<div class="wrap"><main>
+<h1>Privacy Policy</h1>
+<p class="updated">Last updated: 14 November 2026</p>
+<div class="note"><p>The short version: Decluttering does not collect, send or share any data. Everything happens on your iPhone.</p></div>
+
+<h2>What the app does with your photos</h2>
+<p>With your permission, Decluttering reads your Photos library on your device to show the photos and videos you took on this date in past years. It uses Apple's PhotoKit framework. Photos are never uploaded, copied out of your library or sent anywhere.</p>
+<p>When you bin a photo, the app asks iOS to delete it. iOS shows its own confirmation and moves the photo to the <b>Recently Deleted</b> album, where it stays for about 30 days before it is removed for good. Photos you keep are left untouched in your library.</p>
+<p>The look-alike finder compares photos using Apple's Vision framework. This analysis runs entirely on your device.</p>
+
+<h2>What the app stores on your device</h2>
+<ul>
+<li><b>Your decisions.</b> A small on-device database (SwiftData) holds the identifier of each photo you kept or binned and the date you decided. It does not contain the photos themselves. It is used for your kept list, your stats and your streak.</li>
+<li><b>Preferences.</b> Your chosen theme, the state of the break reminders and the stickers you have earned are saved in the app's settings (UserDefaults).</li>
+<li><b>The widget.</b> The home screen widget runs on your device and reads photos from your library in the same way as the app. It shares the decisions database and your theme with the app through an App Group, a storage area on your device that only the app and its widget can use.</li>
+</ul>
+
+<h2>Notifications</h2>
+<p>If you switch on the daily reminder, the app schedules a local notification on your device. It is created by iOS on the phone itself. No server or push service is involved, and you can switch it off at any time in the app or in iOS Settings.</p>
+
+<h2>What we do not do</h2>
+<ul>
+<li>No accounts or sign-in.</li>
+<li>No servers: the app has no backend and makes no network requests of its own.</li>
+<li>No analytics, crash reporting or advertising.</li>
+<li>No tracking, and no third-party SDKs.</li>
+<li>No data is sold or shared with anyone.</li>
+</ul>
+<p>Because nothing leaves your device, we have no copy of your data and cannot access it.</p>
+
+<h2>Deleting your data</h2>
+<ul>
+<li>Deleting the app removes its database and preferences from your device.</li>
+<li>In the stats screen, <b>Bring my kept photos back</b> clears the kept list, so those photos appear in the app again.</li>
+<li>You can withdraw Photos access at any time in iOS Settings, under Decluttering, then Photos.</li>
+</ul>
+
+<h2>Children</h2>
+<p>Decluttering is not directed to children, and because it collects no data it does not knowingly collect personal information from anyone, including children.</p>
+
+<h2>Changes to this policy</h2>
+<p>If this policy changes, the updated version will be published on this page with a new "Last updated" date.</p>
+
+<h2>Contact</h2>
+<p>Questions about privacy? Open an issue on <a href="https://github.com/khansharkhamnida/decluttering/issues">GitHub Issues</a>. Please don't post personal information there. You can also read the <a href="support.html">support page</a>.</p>
+</main></div>
+<footer><div class="wrap">Made with love and a smiling bin.<br><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a href="https://github.com/khansharkhamnida/decluttering">GitHub</a><a href="https://github.com/khansharkhamnida/decluttering/issues">Report a bug</a></div></footer>
+</body>
+</html>

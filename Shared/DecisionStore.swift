@@ -95,8 +95,11 @@ final class DecisionStore: DecisionRecording {
 
     /// The current day streak, read the same way for the widget.
     nonisolated static func streakSnapshot() -> Int {
-        if Thread.isMainThread { return MainActor.assumeIsolated { shared.currentStreak() } }
-        return DispatchQueue.main.sync { MainActor.assumeIsolated { shared.currentStreak() } }
+        // Only the decision days are read on the main thread; the photo lookups run on the caller's thread.
+        let days: Set<Date>
+        if Thread.isMainThread { days = MainActor.assumeIsolated { shared.decisionDays() } }
+        else { days = DispatchQueue.main.sync { MainActor.assumeIsolated { shared.decisionDays() } } }
+        return streak(decisionDays: days, hadPhotosOn: PhotoLibraryService().hadPhotosPredicate())
     }
 
     func recordKept(ids: [String]) {
@@ -152,18 +155,46 @@ final class DecisionStore: DecisionRecording {
         WidgetCenter.shared.reloadAllTimelines()
     }
 
-    /// Consecutive days with at least one decision. A day with nothing yet doesn't break yesterday's streak.
-    func currentStreak(calendar: Calendar = .current) -> Int {
+    /// The start of every day that has at least one decision.
+    func decisionDays(calendar: Calendar = .current) -> Set<Date> {
         let all = (try? context.fetch(FetchDescriptor<Decision>())) ?? []
-        let days = Set(all.map { calendar.startOfDay(for: $0.date) })
+        return Set(all.map { calendar.startOfDay(for: $0.date) })
+    }
 
-        var cursor = calendar.startOfDay(for: .now)
-        if !days.contains(cursor), let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor) {
-            cursor = yesterday
-        }
+    /// Consecutive days with at least one decision, skipping days with nothing to sort.
+    /// `hadPhotosOn` defaults to the photo library; without photo access every day counts.
+    func currentStreak(calendar: Calendar = .current, hadPhotosOn: (@Sendable (Date) -> Bool)? = nil) -> Int {
+        let predicate = hadPhotosOn ?? PhotoLibraryService().hadPhotosPredicate(calendar: calendar)
+        return Self.streak(decisionDays: decisionDays(calendar: calendar), hadPhotosOn: predicate, calendar: calendar)
+    }
+
+    /// Walks back from today counting days with a decision.
+    /// - A day with no decision and no photos to sort is skipped: it neither adds to nor breaks the streak.
+    /// - A day with photos but no decision breaks it. Today is the exception: it can still be sorted.
+    /// - Without `hadPhotosOn` (no photo access) no day is skipped.
+    /// The photo check only runs for days missing a decision, at most `maxSkippedDays` times, and never
+    /// past the oldest decision.
+    nonisolated static func streak(
+        decisionDays: Set<Date>,
+        hadPhotosOn: (@Sendable (Date) -> Bool)?,
+        now: Date = .now,
+        calendar: Calendar = .current,
+        maxSkippedDays: Int = 400
+    ) -> Int {
+        let days = Set(decisionDays.map { calendar.startOfDay(for: $0) })
+        guard let earliest = days.min() else { return 0 }
+
+        let today = calendar.startOfDay(for: now)
+        var cursor = today
         var streak = 0
-        while days.contains(cursor) {
-            streak += 1
+        var skipped = 0
+        while cursor >= earliest {
+            if days.contains(cursor) {
+                streak += 1
+            } else if cursor != today {
+                guard let hadPhotosOn, skipped < maxSkippedDays, !hadPhotosOn(cursor) else { break }
+                skipped += 1
+            }
             guard let previous = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
             cursor = previous
         }

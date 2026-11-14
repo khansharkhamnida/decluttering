@@ -38,7 +38,7 @@ struct BannerViewModel {
 
 // MARK: - View
 
-protocol OnThisDayViewProtocol: AnyObject {
+protocol OnThisDayViewProtocol: BinnedNoticeShowing {
     func show(dateText: String)
     func show(quote: String)
     func show(stats: BoothStats)

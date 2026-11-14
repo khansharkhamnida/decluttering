@@ -13,7 +13,7 @@ final class OnThisDayRouter: OnThisDayRouterProtocol {
         let router = OnThisDayRouter()
         let presenter = OnThisDayPresenter(view: view, interactor: interactor, router: router,
                                        decisions: DecisionStore.shared, reminders: ReminderService.shared,
-                                       breaks: BreakPolicy())
+                                       breaks: BreakPolicy(), keepersAlbum: KeepersAlbumManager.shared)
         view.presenter = presenter
         router.viewController = view
         router.thumbnailLoader = { id, size, done in interactor.loadThumbnail(id: id, targetSize: size, completion: done) }

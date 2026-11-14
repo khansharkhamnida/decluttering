@@ -12,16 +12,19 @@ final class PhotoViewerRouter: PhotoViewerRouterProtocol {
         let view = PhotoViewerViewController()
         let router = PhotoViewerRouter()
         let presenter = PhotoViewerPresenter(view: view, interactor: interactor, router: router,
-                                             decisions: DecisionStore.shared, items: items, startIndex: startIndex, onChanged: onChanged)
+                                             decisions: DecisionStore.shared, items: items, startIndex: startIndex, onChanged: onChanged,
+                                             keepersAlbum: KeepersAlbumManager.shared)
         view.presenter = presenter
         router.viewController = view
         router.imageLoader = { id, size, done in interactor.loadImage(id: id, targetSize: size, completion: done) }
 
         view.modalPresentationStyle = .fullScreen
-        view.preferredTransition = .zoom { context in
-            guard let viewer = context.zoomedViewController as? PhotoViewerViewController,
-                  let id = viewer.currentID else { return nil }
-            return sourceViewProvider(id)
+        if #available(iOS 18.0, *) {
+            view.preferredTransition = .zoom { context in
+                guard let viewer = context.zoomedViewController as? PhotoViewerViewController,
+                      let id = viewer.currentID else { return nil }
+                return sourceViewProvider(id)
+            }
         }
         return view
     }
