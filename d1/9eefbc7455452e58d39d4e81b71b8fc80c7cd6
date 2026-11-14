@@ -1,0 +1,21 @@
+Shared/PhotoLibraryService.swift
+  s_e040267076e5e2::t_923186375297cb 70-72,78,82,85,88,95-102
+Shared/DecisionStore.swift
+  s_e040267076e5e2::t_923186375297cb 98-103,168
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d19eefbc7455452e58d39d4e81b71b8fc80c7cd6",
+  "prompts": {},
+  "sessions": {
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
