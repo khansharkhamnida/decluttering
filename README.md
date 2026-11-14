@@ -9,9 +9,12 @@ Snap. Sort. Bin. An iOS app that shows the photos you took **on this day** in pa
 ## Features
 
 - On This Day folders per year, with filters for photos, Live Photos, videos and screenshots
-- Swipe sort with undo and a last look before anything is deleted
-- Drag to select, look-alike finder, streaks, stickers and gentle break reminders
-- Home screen widget with a Keep button
+- Swipe sort with undo and a last look before anything is deleted, and videos that play right on the card
+- A seek bar in the photo viewer to skip through videos
+- Drag to select, look-alike finder, stickers and gentle break reminders (after 40 and 100 photos)
+- Streaks that days with nothing to sort never break
+- An optional "Decluttering Keepers" album in Photos for the photos you keep
+- Home screen widget with a Keep button, and a Binny "all sorted" card with your streak
 - 14 themes that restyle the whole app, the widget and the app icon
 
 Photos stay on your device. There are no accounts, servers or analytics.
@@ -31,5 +34,6 @@ Pick the `decluttering` scheme, set your own team under Signing & Capabilities, 
 
 - `decluttering/` the app (VIPER modules, `Theme/` for the picker)
 - `DeclutteringWidget/` the widget extension
-- `Shared/` code used by both (themes, decision store, Binny's voice)
+- `Shared/` code used by both (themes, decision store, widget logic, Binny's voice)
+- `declutteringTests/` 195 unit tests (presenters, streaks, widget logic, Keepers album)
 - `docs/` the GitHub Pages website

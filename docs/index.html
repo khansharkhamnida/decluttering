@@ -65,8 +65,9 @@ h2{font-size:27px;font-weight:900;margin:6px 2px 0;text-transform:var(--upper)}
 .icon{width:76px;height:76px;border-radius:18px;position:relative;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px #0006}
 .icon:after{content:"✦";position:absolute;top:6px;left:9px;font-size:13px;color:var(--onbg)}
 .widget{width:110px;height:110px;border-radius:24px;border:5px solid var(--strip);position:relative;overflow:hidden;box-shadow:0 4px 10px #0006;background:var(--strip);color:var(--ink)}
-.widget .ph{position:absolute;inset:0 0 25px 0;border-radius:14px 14px 3px 3px}
-.widget .cap{position:absolute;left:0;right:0;bottom:0;height:25px;display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 5px;font-weight:900;font-size:9.5px;line-height:1}
+.widget .ph{position:absolute;inset:3px;border-radius:18px}
+.widget .cap{position:absolute;left:7px;right:7px;bottom:7px;height:23px;background:var(--paper);border-radius:999px;display:flex;align-items:center;justify-content:space-between;padding:0 2px 0 8px;font-weight:900;font-size:8.5px;line-height:1}
+.widget .cap span{white-space:nowrap}
 .widget .cap i{width:19px;height:19px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:9px}
 svg.binny{flex:none}
 
@@ -181,7 +182,7 @@ html,body{overflow-x:clip}
 .stk u.lock{background:#6B0F1F14;border:2px solid #6B0F1F4d;box-shadow:none;color:#6B0F1F66;font-size:20px}
 .phone.wall{background:radial-gradient(circle at 30% 20%,#ffd1a0,#0000 45%),linear-gradient(160deg,#7f5ad0,#2b3a8f 60%,#142046);padding:56px 18px 0;display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 50px #0008}
 .clock{font-size:60px;font-weight:300;text-align:center;color:#fff;line-height:1}.clock small{display:block;font-size:14px;font-weight:600;opacity:.85;margin:6px 0 30px}
-.widget.bigw{width:164px;height:164px;border-radius:30px;border-width:6px}.widget.bigw .ph{inset:0 0 34px 0}.widget.bigw .cap{height:34px;font-size:12px;padding:0 6px 0 7px}
+.widget.bigw{width:164px;height:164px;border-radius:30px;border-width:6px}.widget.bigw .ph{inset:4px;border-radius:24px}.widget.bigw .cap{height:32px;left:10px;right:10px;bottom:10px;font-size:12px;padding:0 3px 0 11px}
 .widget.bigw .cap i{width:24px;height:24px;font-size:11px}
 .dock{position:absolute;left:14px;right:14px;bottom:14px;background:#ffffff33;border-radius:30px;padding:12px;display:flex;justify-content:space-around;backdrop-filter:blur(8px)}
 .dock img,.dock span{width:54px;height:54px;border-radius:14px;background:#ffffff55;display:block}
@@ -269,14 +270,14 @@ footer a{margin:0 10px}
  <article class="story">
   <div class="copy"><span class="num">01</span><h3>On This Day folders</h3>
    <p>Open the app and every photo you took on today's date lands in a folder per year. Fold the years you are done with, or filter by photos, Live Photos, videos and screenshots.</p>
-   <ul><li>One folder per year, newest first</li><li>Filter chips with live counts</li><li>Step back or forward to any other day</li></ul></div>
+   <ul><li>One folder per year, newest first</li><li>Filter chips with live counts</li><li>Step back or forward to any other day</li><li>Videos play in the viewer, with a seek bar to skip ahead</li></ul></div>
   <div class="slot" data-mock="home"></div>
  </article>
 
  <article class="story">
   <div class="copy"><span class="num">02</span><h3>Swipe sort</h3>
    <p>Go through photos one at a time. Swipe right to keep, left to bin. Made a mistake? Undo it. Nothing is deleted until you have taken a last look.</p>
-   <ul><li>Big, focused card for each photo</li><li>Undo the last decision</li><li>Binned photos go to Recently Deleted</li></ul></div>
+   <ul><li>Big, focused card for each photo</li><li>Undo the last decision</li><li>Videos play right on the card, muted, tap for sound</li><li>Binned photos go to Recently Deleted, with a reminder</li><li>Keepers can be collected in a &ldquo;Decluttering Keepers&rdquo; album</li></ul></div>
   <div class="slot"><div class="phone mock">
    <div class="top"><div class="circ" style="font-size:13px;align-items:center;padding:0">✕</div><div class="pill">3 / 12</div></div>
    <div class="swcard"><div class="swimg" style="background:linear-gradient(160deg,#89f7fe,#66a6ff)"><i class="sun"></i></div><b>Sunglasses Sunday</b><small>13 Nov 2024</small><span class="stamp keep">KEEP</span></div>
@@ -307,7 +308,7 @@ footer a{margin:0 10px}
  <article class="story">
   <div class="copy"><span class="num">05</span><h3>Streaks and stickers</h3>
    <p>Bin a little each day and the streak grows. Days with nothing to sort never break it. Hit milestones to collect stickers for your Booth Report. Locked ones stay a mystery until you earn them.</p>
-   <ul><li>Daily streak counter</li><li>Nine stickers to collect</li></ul></div>
+   <ul><li>Daily streak counter</li><li>Days with nothing to sort never break it</li><li>Nine stickers to collect</li></ul></div>
   <div class="slot"><div class="phone mock light">
    <div class="top"><div class="circ" style="align-items:center;padding:0;font-size:14px">‹</div></div>
    <h2 style="color:var(--ink)">Booth Report</h2>
@@ -323,7 +324,7 @@ footer a{margin:0 10px}
  <article class="story">
   <div class="copy"><span class="num">06</span><h3>Home screen widget</h3>
    <p>A memory from this day, right on your home screen. Tap the heart to keep it without even opening the app. Small, medium and large sizes.</p>
-   <ul><li>Photos from past years, refreshed through the day</li><li>Heart button keeps a photo straight from the widget</li><li>Follows your chosen theme</li></ul></div>
+   <ul><li>A framed photo card with a small label and a heart; side by side on medium</li><li>A cheerful &ldquo;All sorted&rdquo; card with Binny and your streak when nothing is left</li><li>Photos from past years, refreshed through the day</li><li>Heart button keeps a photo straight from the widget</li><li>Follows your chosen theme</li></ul></div>
   <div class="slot"><div class="phone wall">
    <div class="clock">9:41<small>Friday, 13 November</small></div>
    <div class="widget bigw"><div class="ph" style="background:linear-gradient(135deg,#f6d365,#fda085)"></div><div class="cap"><span>2 years ago<br><small style="font-size:8px;opacity:.7">13 Nov 2024</small></span><i>♥</i></div></div>
@@ -334,7 +335,7 @@ footer a{margin:0 10px}
  <article class="story">
   <div class="copy"><span class="num">07</span><h3>Gentle breaks</h3>
    <p>Sorting photos can be oddly tiring. After a long run, Binny suggests a stretch and a sip of water, and you can switch on a daily reminder to come back.</p>
-   <ul><li>Friendly nudges, never nagging</li><li>Optional daily reminder</li></ul></div>
+   <ul><li>A gentle nudge after 40 photos, a rest suggestion after 100</li><li>Friendly, never nagging, and each shown once a day</li><li>Optional daily reminder</li></ul></div>
   <div class="slot"><div class="phone mock">
    <div class="dimmer"></div>
    <div class="sheet"><div class="grab"></div><h4>Time for a tiny break</h4><p>You've sorted 40 photos today. Decluttering is best in small doses, so stretch, sip some water and come back fresh.</p><div class="b1">Take a break</div><div class="b2">Keep going</div></div>
@@ -384,7 +385,7 @@ footer a{margin:0 10px}
    <ul>
     <li><b>Fast thumbnails</b> that load ahead as you scroll. <code>PHCachingImageManager</code></li>
     <li><b>Safe deleting.</b> Binned photos go to Recently Deleted, after a last look. <code>PHPhotoLibrary.performChanges</code></li>
-    <li><b>Live Photos and video</b> play in the viewer. <code>PhotosUI</code>, <code>AVFoundation</code></li>
+    <li><b>Live Photos and video</b> play in the viewer and on Swipe Sort cards. <code>PhotosUI</code>, <code>AVFoundation</code></li><li><b>Optional Keepers album</b> for the photos you keep. <code>PHAssetCollectionChangeRequest</code></li>
    </ul></article>
   <article class="fw"><span class="fw-tag">Look-alikes</span><h3>Vision</h3>
    <p class="plain">Finds the retakes and burst shots, so you can keep the best one. It turns each photo into a "fingerprint" of what it looks like and compares them, on the phone.</p>
@@ -429,7 +430,7 @@ footer a{margin:0 10px}
    <p class="plain">Little robots that check the rules every time the code changes.</p>
    <ul>
     <li><b>Presenter tests</b> for On This Day, Swipe Sort and Photo Viewer, using mock interactors and routers.</li>
-    <li><b>Logic tests</b> for themes, break rules and drag select.</li>
+    <li><b>Logic tests</b> for themes, break rules, drag select, streaks, the Keepers album and the widget's timeline, 195 tests in all.</li>
    </ul></article>
  </div>
  <div class="tech-chips"><span>Swift</span><span>UIKit</span><span>SwiftUI (widget)</span><span>Photos</span><span>Vision</span><span>SwiftData</span><span>WidgetKit</span><span>App Intents</span><span>Core Haptics</span><span>UserNotifications</span><span>VIPER</span><span>iOS 17+</span></div>
