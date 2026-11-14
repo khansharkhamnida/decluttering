@@ -1,0 +1,175 @@
+decluttering/OnThisDay/OnThisDayContracts.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 41
+decluttering/SwipeSort/Presenter/SwipeSortPresenter.swift
+  s_c6b5824d8eab18::t_baad424329816b 1,12,23-24,26,43,69,110-113
+  s_bc25827c914251::t_1298c04f59a61f 116,123
+  s_c6b5824d8eab18::t_41bccb30218ac0 114
+decluttering/SwipeSort/SwipeSortContracts.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 23
+  s_c6b5824d8eab18::t_baad424329816b 1,42
+decluttering/SwipeSort/View/SwipeSortViewController.swift
+  s_c6b5824d8eab18::t_88d41ce7f2aa37 1,4-20,31-33,38-55,101-132,137,142-143,146-155,183-186,206-341,412,418,425-426,439-440,751,762
+  s_e3ce0782329d7c::t_ddebdac9522494 381-383,404,408-411,413-417,419-424,427-438,441,663,743-750,752-761,763,774-775,837,847
+decluttering/Services/KeepersAlbum.swift
+  s_946edea0b0b91d::t_ba325470b50ba6 1-84
+declutteringTests/Mocks.swift
+  s_bc25827c914251::t_17aeb59ce6ce37 39,58
+docs/index.html
+  s_ee4c16e389ef6e::t_9568ba9d50b58f 262,435,447
+  s_e3ce0782329d7c::t_2da19aaeec6005 309
+  s_e3ce0782329d7c::t_7803dc32188ed4 454
+decluttering/Components/CelebrationOverlay.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 3-19,29
+  s_bc25827c914251::t_a82171e96a0ddf 31-113
+  s_bc25827c914251::t_8877bab4dbb470 30
+Shared/DecisionStore.swift
+  s_ee4c16e389ef6e::t_69ec24dc865bad 98-102,158-159,161-162,164-188,190-197
+decluttering/PhotoViewer/PhotoViewerContracts.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 24
+decluttering/Components/StatsViewController.swift
+  s_946edea0b0b91d::t_7820b777951726 13-14,93,157-203
+  s_946edea0b0b91d::t_a1380a4812c114 204-205
+decluttering.xcodeproj/project.pbxproj
+  s_c6b5824d8eab18::t_e006e37f2e3ccc 561,618
+declutteringTests/PhotoViewerPresenterTests.swift
+  s_bc25827c914251::t_17aeb59ce6ce37 11,18
+declutteringTests/SwipeSortPresenterTests.swift
+  s_bc25827c914251::t_17aeb59ce6ce37 14,22
+Shared/BreakPolicy.swift
+  s_9596743c6941dc::t_a95a4d1cedc9f0 13-15
+Shared/PhotoLibraryService.swift
+  s_946edea0b0b91d::t_ba325470b50ba6 68-97,104-160
+  s_946edea0b0b91d::t_20b733e09ef5c2 161
+declutteringTests/WidgetLogicTests.swift
+  s_21bb1ec3f25c06::t_30b48943ce72ea 1-277
+decluttering/OnThisDay/Presenter/OnThisDayPresenter.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 271,280
+  s_bc25827c914251::t_91480270b518ab 11,32-34,153
+DeclutteringWidget/DeclutteringWidget.swift
+  s_21bb1ec3f25c06::t_6b3fd41dbb15f3 104,135-137,144-145,162-164,171,175-177,182,184,215,219,234-235,238-240,245-246,266-267
+  s_a0923e559e0f15::t_256856b51a068e 41,46-55,57-60,79,82-83
+  s_e040267076e5e2::t_3ef204794f62bc 226,256,271
+  s_e040267076e5e2::t_fc8cedd7cfc91f 268-269
+README.md
+  s_6461e1d2c11e66::t_043f35e5af1d3b 5-6
+  s_ee4c16e389ef6e::t_9568ba9d50b58f 21
+  s_ee4c16e389ef6e::t_556bbbf813fa3c 7
+decluttering/PhotoViewer/Presenter/PhotoViewerPresenter.swift
+  s_bc25827c914251::t_1298c04f59a61f 66
+  s_bc25827c914251::t_e1b359cba5c398 12,18-20,53
+Shared/BoothVoice.swift
+  s_bc25827c914251::t_a5e1d640bdd64d 106-113
+declutteringTests/BinSafetyNetTests.swift
+  s_ee4c16e389ef6e::t_326ccdc7bebcef 26
+  s_bc25827c914251::t_17aeb59ce6ce37 1-25,27-167
+Shared/WidgetLogic.swift
+  s_a0923e559e0f15::t_44e861be9657c1 1-76
+decluttering/OnThisDay/Router/OnThisDayRouter.swift
+  s_946edea0b0b91d::t_08ed398d0233c1 16
+decluttering/OnThisDay/View/OnThisDayViewController.swift
+  s_ee4c16e389ef6e::t_029f67a0276656 177-180,408-412
+decluttering/PhotoViewer/Router/PhotoViewerRouter.swift
+  s_946edea0b0b91d::t_a8414584398e8e 15-16,22-27
+decluttering/PhotoViewer/View/PhotoViewerViewController.swift
+  s_21bb1ec3f25c06::t_063a56806ffca0 120,126-129,140-143,157-158,170-173,182,194,270,276
+decluttering/SwipeSort/Router/SwipeSortRouter.swift
+  s_946edea0b0b91d::t_4d6e6860e70b64 14-15
+declutteringTests/KeepersAlbumTests.swift
+  s_946edea0b0b91d::t_fbc02034fe87c1 1-194
+declutteringTests/StreakTests.swift
+  s_e3ce0782329d7c::t_1d5fd20cae7558 1-150
+declutteringTests/SwipeSortVideoTests.swift
+  s_e3ce0782329d7c::t_ed9309e8d699ef 1-116
+docs/privacy.html
+  s_6461e1d2c11e66::t_e6e9b18e2cf9d2 1-96
+docs/support.html
+  s_6461e1d2c11e66::t_dddf9193b6251e 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0ad84bc2b744a2ed6efeccec94eb6743ccd48792",
+  "prompts": {},
+  "sessions": {
+    "s_21bb1ec3f25c06": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "5cac4583-7061-43e9-81d7-60e2f8fa94e3",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_6461e1d2c11e66": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "97917dcd-6692-4cef-81ab-9b13e79c2b7d",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_946edea0b0b91d": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "465975fe-617b-4c2f-88aa-0eb7c2b71850",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_9596743c6941dc": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "ae62e8e5-56c0-4f23-ab60-30c497272d8b",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_a0923e559e0f15": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "6d35e063-d145-41fe-8bb0-38cab5cf85c3",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_bc25827c914251": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "5729a858-11c4-4eb9-bd61-0c7851722839",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_c6b5824d8eab18": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "a5f57d06-7f2c-4d29-aacb-584e3c7acd8c",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_e040267076e5e2": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "0648407d-4c86-46dc-a0b4-20c900c9fb61",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_e3ce0782329d7c": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "2753a798-8ba0-4f0b-bbc6-116c6f9de89c",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    },
+    "s_ee4c16e389ef6e": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "bd8e03e6-e9c3-4ad1-9d12-c5e1f688b895",
+        "model": "unknown"
+      },
+      "human_author": "khansharkhamnida <kzsghazali.kzsg@gmail.com>"
+    }
+  }
+}
